@@ -57,9 +57,9 @@ const recipeSeed = [
         steps: [
             "Combine balsamic vinegar, honey, mustard, garlic, oregano, salt and pepper in foot processor",
 
-            Turn the foot processor on and pour olive oil in a steady stream into mixture until salad dressing is this and creamy.
+            "Turn the foot processor on and pour olive oil in a steady stream into mixture until salad dressing is this and creamy.",
             
-            Store up to 2 weeks in refrigerator in a shakable sealed containe"   
+            "Store up to 2 weeks in refrigerator in a shakable sealed containe"   
         ],
         users:[]
     }
