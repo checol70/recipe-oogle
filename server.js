@@ -4,13 +4,13 @@ const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3001;
 const app = express();
 //const API = require("./routes/api-routes");
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nyt";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/recipeoogle";
 const mongoose = require("mongoose");
 const passport = require("passport")
 
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
-
+var db = require("./models");
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -28,15 +28,41 @@ passport.use(new GoogleStrategy({
     clientID: config.id,
     clientSecret: config.secret,
     callbackURL: "/auth/google/callback"
-  },
-  function(accessToken, refreshToken, profile, cb) {
-      console.log(profile)
-    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-    //   return cb(err, user);
-    // });
-  }
+},
+    function (accessToken, refreshToken, profile, cb) {
+        db.User.findOne({
+            googleId: profile.id
+        }).exec((err, user) => {
+            if(err)console.log(`err ${err}`);
+            console.log(`user: ${user}`)
+            console.log(`idtype: ${typeof profile.id}`)
+            if (user === null) {
+                console.log("need to create user!")
+                db.User.create({
+                    googleId: profile.id,
+                    displayName: profile.displayName
+                }).then(val => {
+                    console.log(`val:${val}`)
+                    return cb(err, val);
+                })
+            } else{
+                console.log("previous user!")
+                return cb(err, user);
+            }
+        });
+    }
 ));
-
+app.use(passport.initialize())
+//app.use(express.session({ secret: config.clientSecret }))
+app.use(passport.session());
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+});
+passport.deserializeUser(function (id, done) {
+    db.User.findById(id, function (err, user) {
+        done(err, user);
+    });
+});
 app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile'] }));
 
