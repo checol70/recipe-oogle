@@ -52,14 +52,14 @@ const recipeSeed = [
             "1 clove garlic crushed",
             "1/2 T dried oregano",
             "salt and pepper to taste",
-            "1/3 C olilve oil or more if needed"
+            "1/3 C olive oil or more if needed"
         ],
         steps: [
             "Combine balsamic vinegar, honey, mustard, garlic, oregano, salt and pepper in foot processor",
 
             "Turn the foot processor on and pour olive oil in a steady stream into mixture until salad dressing is this and creamy.",
             
-            "Store up to 2 weeks in refrigerator in a shakable sealed containe"   
+            "Store up to 2 weeks in refrigerator in a shakable sealed container"   
         ],
         users:[]
     }

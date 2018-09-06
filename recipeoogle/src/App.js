@@ -1,21 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+import Container from "./components/Container";
+import Header from "./components/Header";
+import NavBar from "./components/NavBar";
+import images from "./images.json";
+import Footer from "./components/Footer";
+
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+ state = {
+   displayName: "",
+
+ };
+
+
+
+ // render page
+ render() {
+   console.log(this.state.displayName);
+   return (
+     <div>
+       <NavBar displayName ={this.state.displayName}/>
+       <Header />
+       <Container>
+         {this.state.images.map(image => (
+           <ImageCard
+             key={image.id}
+             id={image.id}
+             image={image.image}
+             imageSelected={this.imageSelected}
+           />
+         ))}
+       </Container>
+       <Footer />
+     </div>
+   );
+ }
+};
 
 export default App;

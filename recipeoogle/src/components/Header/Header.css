@@ -1,0 +1,29 @@
+.header {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPSYkpcCx0UYrtcKYDpWrTKl0LEvxNlFIc8VHwpJFYfCOSgJ1e7A");
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.8;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    font-family: 'Kosugi', sans-serif;
+    height: 15vh;
+}
+
+h1 {
+    color: #d9be40;
+    opacity: 1;
+    margin: 0;
+    text-decoration: underline;
+    vertical-align: middle;
+    padding-top: 4vh;
+}
+
+h2 {
+    color: #d9be40;
+    opacity: 1;
+    margin: 0;
+    text-decoration: underline;
+}
