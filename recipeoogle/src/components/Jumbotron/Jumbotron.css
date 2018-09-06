@@ -1,0 +1,29 @@
+.jumbotron {
+  min-height: 300px;
+  padding-top: 100px;
+  font-family: Arial, Helvetica, sans-serif;
+  
+}
+
+.google-logo {
+  font-family: Catull,Sans-Serif;
+  font-size: 50px;
+}
+.google-R { 
+  color:#0047F1; 
+}
+.google-o1 { 
+  color:#DD172C; 
+}
+.google-o2 { 
+  color:#F9A600; 
+}
+.google-g { 
+  color:#0047F1; 
+}
+.google-l { 
+  color:#00930E; 
+}
+.google-e { 
+  color:#E61B31; 
+}
