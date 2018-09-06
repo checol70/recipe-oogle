@@ -4,21 +4,13 @@ const db = require("../models");
 // this file is for seeding our local machines.
 
 mongoose.connect(
-    process.env.MONGODB_URI || "mongodb://localhost/recipes"
+    process.env.MONGODB_URI || "mongodb://localhost/recipeoogle"
 )
 
-const userSeed = [
-    {
-        username: "Colton",
-        password: "HiColton"        
-    },{
-        username: "Carol",
-        password: "HiCarol"
-    },{
-        username: "Micheal",
-        password: "HiMicheal"
+const userSeed = {
+       googleId: 107597886067898717683,
+       displayName: "Recipe Oogle"
     }
-]
 
 const recipeSeed = [
     {
@@ -41,8 +33,7 @@ const recipeSeed = [
             `Add beef bouillon and stir until disolved`,
             `Add tortellini and cook for approx 5 minutes until done`,
             `Serve in bowls, and sprinkle with Parmesan cheese`
-        ],
-        users: []
+        ]
     },{
         name: "Balsamic Salad Dressing",
         ingredients: [
@@ -60,7 +51,39 @@ const recipeSeed = [
             "Turn the foot processor on and pour olive oil in a steady stream into mixture until salad dressing is this and creamy.",
             
             "Store up to 2 weeks in refrigerator in a shakable sealed containe"   
-        ],
-        users:[]
+        ]
     }
 ]
+
+db.Recipe.remove({}).exec();
+db.User.remove({}).exec();
+
+function seedUser(){
+    db.User.findOne({googleId: 107597886067898717683}).exec((err,user)=>{
+        console.log(user);
+        if(user!== null){
+            //just seed recipes
+            console.log("seeding Recipes", user._id);
+            seedRecipes(user._id)
+        } else {
+            //seed userdb then recursivly call this to make sure we have this working
+
+            db.User.create(userSeed).then(e=>{
+                console.log(e);
+                seedUser();
+            })
+        }
+    })
+}
+function seedRecipes(id){
+    recipeSeed.forEach((e)=>{
+        e.originalUser = id;
+        e.users = [id];
+        console.log(e);
+        db.Recipe.create(e);
+    })
+    setTimeout(() => {
+        mongoose.disconnect();
+    }, 1000);
+}
+seedUser();
