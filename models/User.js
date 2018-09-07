@@ -11,6 +11,10 @@ const UserSchema = new Schema({
         type:String,
         required:true
     },
+    token:{
+        type: String,
+        required: false
+    },
     favoriteRecipes:[{
         type: Schema.Types.ObjectId,
         ref: "Recipe"
