@@ -3,11 +3,11 @@ import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import Container from "./components/Container";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
-import queryString from "query-string";
-import Home from "./components/Home";
-import Add from "./components/Add";
 import Search from "./components/Search";
-
+import NavTabs from "./NavTabs";
+import Add from "./pages/Add";
+//import All from "./pages/All";
+//import Contact from "./pages/Contact";
 
 class App extends Component {
   state = {
@@ -15,29 +15,25 @@ class App extends Component {
 
   };
 
-  componentWillMount() {
-    var query = queryString.parse(this.props.location.search);
-    if (query.token) {
-      window.localStorage.setItem("tkn", query.token);
-      window.localStorage.setItem("displayName", query.displayName);
-      this.props.history.push("/");
-    }
+  userLogin = ()=>{
     this.setState({ displayName: window.localStorage.getItem("displayName") });
   }
 
+  //need an a tag to localhost:3001/auth/google
   // render page
   render() {
-    console.log(this.state.displayName);
     return (
       <div>
-          <Navbar displayName={this.state.displayName} />
+        {console.log(this.props)}
+          <Navbar displayName={this.state.displayName} location={this.props.location}/>
+          <Link to="/">home</Link>
           <Header />
           <Container>
             <BrowserRouter>
             <Switch>
-              <Route exact path="/" component={Home}/>
-              <Route exact path="/Search" component={Search}/>
-              <Route exact path="/Add" component={Add}/>
+              <Route exact path="/" component={Search} login={this.userLogin}/>
+              <Route exact path="/add" component={Add}/>
+              {/*<Route component={noMatch}/>*/}
             </Switch>
             </BrowserRouter>
           </Container>

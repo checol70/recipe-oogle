@@ -83,4 +83,8 @@ module.exports = function (app) {
             }
         })
     })
+
+    app.get("/api/recipes/:query", (req, res)=>{
+        
+    })
 }

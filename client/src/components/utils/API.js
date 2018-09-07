@@ -7,10 +7,10 @@ import axios from "axios";
 export default {
   getUserRecipes: function(userName) {
     return axios.get("/api/users/" + userName);
-  }
+  },
   getAllRecipes: function() {
     return axios.get("/api/recipes/all");
-  }
+  },
   getSearchedRecipes: function(search) {
     return axios.get("/api/recipes/" + search);
   }

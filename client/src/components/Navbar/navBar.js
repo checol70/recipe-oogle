@@ -5,27 +5,55 @@ import "./Navbar.css";
 // Depending on the current path, this component sets the "active" class on the appropriate navigation link item
 const Navbar = props => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light">
+  {console.log(props)}
     <Link className="navbar-brand" to="/">
       Recipe-oogle
     </Link>
     <div>
-    <p> Welcome props.Displayname</p>
-      <ul className="navbar-nav">
-        <li className="nav-item">
-          <Link
-            to="/"
-            className={
-              window.location.pathname === "/" || window.location.pathname === "/about"
-                ? "nav-link active"
-                : "nav-link"
-            }
-          >
-            About
-          </Link>
-        </li>
-
-      </ul>
+    <p> Welcome {window.localStorage.getItem("displayName")}</p>
     </div>
+    <ul className="nav nav-tabs">
+    <li className="nav-item">
+      <Link
+        to="/"
+        className={
+          props.location.pathname === "/" ? "nav-link active" : "nav-link"
+        }
+      >
+        Home
+      </Link>
+    </li>
+    <li className="nav-item">
+      <Link
+        to="/add"
+        className={
+          props.location.pathname === "/add" ? "nav-link active" : "nav-link"
+        }
+      >
+        Add Recipes
+      </Link>
+    </li>
+    <li className="nav-item">
+      <Link
+        to="/all"
+        className={
+          props.location.pathname === "/all" ? "nav-link active" : "nav-link"
+        }
+      >
+        All Recipes
+      </Link>
+    </li>
+    <li className="nav-item">
+      <Link
+        to="/contact"
+        className={
+          props.location.pathname === "/contact" ? "nav-link active" : "nav-link"
+        }
+      >
+        Contact
+      </Link>
+    </li>
+  </ul>
   </nav>
 );
 
