@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import API from "../utils/API";
 import Container from "../Container";
+import Navbar from "../Navbar";
 //import SearchResults from "../components/SearchResults";
 //import Alert from "../components/Alert";
 import "./Search.css";
 import queryString from "query-string";
+
 
 class Search extends Component {
   state = {
@@ -48,6 +50,7 @@ class Search extends Component {
   render() {
     return (
       <div>
+        <Navbar displayName={this.state.displayName} location={this.props.location}/>
         <Container style={{ minHeight: "80%" }}>
           <h1 className="text-center">Search By Recipe!</h1>
 
