@@ -8,9 +8,7 @@ import "./Navbar.css";
 const Navbar = props => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light">
   {console.log(props)}
-    <Link className="navbar-brand" to="/">
-      Recipe-oogle
-    </Link>
+    
     <div>
     <p> Welcome {window.localStorage.getItem("displayName")}</p>
     </div>

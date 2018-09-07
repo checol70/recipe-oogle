@@ -7,6 +7,7 @@
   }
   
   .google-logo {
+ 
     font-family: Arial, Helvetica, sans-serif;
     font-size: 66px;
    
@@ -29,3 +30,11 @@
   .google-e { 
     color:#e94335; 
   }
+  button {
+    font-size: 16px;
+    margin-top: 50px
+  }
+  #form { margin-top: 50px
+
+  }
+  
