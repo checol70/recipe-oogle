@@ -12,6 +12,7 @@ const cookieParser = require("cookie-parser")
 const config = require("./config");
 const db = require("./models");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const API = require("./routes/api-routes");
 
 //here is where we will put middleware
 app.use(session({
@@ -42,19 +43,25 @@ passport.use(new GoogleStrategy({
             if (user === null) {
                 db.User.create({
                     googleId: profile.id,
-                    displayName: profile.displayName
+                    displayName: profile.displayName,
+                    token: accessToken
                 }).then(val => {
                     val.accessToken = accessToken;
                     return cb(err, val);
                 })
             } else {
-                user.accessToken = accessToken;
-                return cb(err, user);
+                console.log(accessToken);
+                db.User.findByIdAndUpdate(user._id,{token: accessToken}).exec((err,u)=>{
+                    return cb(err, u);
+                })
             }
         });
     }
 ));
-
+function searchName(str){
+    const lowerCase = str.toLowerCase();
+    return lowerCase.replace(/\s/g, '');
+}
 
 
 // Serve up static assets (usually on heroku)
@@ -93,7 +100,7 @@ function (req, res) {
 //     }
 // );
 
-//API(app);
+API(app);
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get("*", (req, res) => {
