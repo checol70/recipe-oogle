@@ -19,17 +19,17 @@ const NavTabs = props => (
           props.currentPage === "Add" ? "nav-link active" : "nav-link"
         }
       >
-        Add
+        Add Recipes
       </a>
     </li>
     <li className="nav-item">
       <a
-        onClick={() => props.handlePageChange("Blog")}
+        onClick={() => props.handlePageChange("All")}
         className={
-          props.currentPage === "Blog" ? "nav-link active" : "nav-link"
+          props.currentPage === "All" ? "nav-link active" : "nav-link"
         }
       >
-        Blog
+        All Recipes
       </a>
     </li>
     <li className="nav-item">
