@@ -20,7 +20,7 @@ const UserSchema = new Schema({
         ref: "Recipe"
     }]
 })
-
+UserSchema.index({displayName:'text'});
 const User = mongoose.model("User", UserSchema);
 
 module.exports= User;

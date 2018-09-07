@@ -14,12 +14,31 @@ module.exports = function (app) {
 
     //this is for retrieving another users recipes, so it doesn't need to be authed.
     app.get("/api/users/:displayName", (req, res) => {
-        db.User.find({ displayName: req.params.displayName }).populate('favoriteRecipes').exec((err, user) => {
-            if (err) console.log(err);
-            res.send(user[0].favoriteRecipes);
+        const regex = new RegExp(req.params.displayName, "i");
+        db.User.find({ $text: { $search: regex } }, (err, data)=>{
+            if(err) console.log(err);
+            console.log(data);
+            
+            const arr = data.map(e=>{
+                const {displayName, favoriteRecipes} = e
+                console.log(displayName, favoriteRecipes)
+                return obj = {
+                    displayName,
+                    favoriteRecipes
+                }
+            })
+            res.send(arr);
         })
     })
 
+    //this route is for getting the current user's recipes.  please note the singular version of user.
+    app.get("/api/user/:token", (req,res)=>{
+        console.log(req.cookies)
+        db.User.findOne({ token: req.params.token }, (err, user) => {
+            if(err) return console.log(err);
+            res.send(user.favoriteRecipes);
+        })
+    })
 
     //this route is for posting recipes.  the token argument is in the local storage if they have signed in.
     app.post("/api/recipes/:token", (req, res) => {
@@ -84,7 +103,17 @@ module.exports = function (app) {
         })
     })
 
-    app.get("/api/recipes/:query", (req, res)=>{
+    //this is for adding recipes to the current users favorites.
+    app.put("/api/recipes/:id/:token", (req, res)=>{
         
+    })
+
+    //this is for searching recipes
+    app.get("/api/recipes/:query", (req, res)=>{
+        const regex = new RegExp(req.params.query, "i");
+        db.Recipe.find({$text:{$search:regex}}, (err, data)=>{
+            if(err) console.log(err);
+            res.send(data);
+        })
     })
 }

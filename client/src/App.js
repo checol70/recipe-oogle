@@ -25,11 +25,10 @@ class App extends Component {
     return (
       <div>
         {console.log(this.props)}
-          <Navbar displayName={this.state.displayName} location={this.props.location}/>
-          <Link to="/">home</Link>
           <Header />
           <Container>
             <BrowserRouter>
+            <Navbar />
             <Switch>
               <Route exact path="/" component={Search} login={this.userLogin}/>
               <Route exact path="/add" component={Add}/>
