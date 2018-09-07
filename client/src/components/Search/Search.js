@@ -51,7 +51,7 @@ class Search extends Component {
       <div>
         <Navbar displayName={this.state.displayName} location={this.props.location}/>
         <Container style={{ minHeight: "80%" }}>
-          <h1 className="text-center">Search By Recipe!</h1>
+
 
           <div className="container">
 
@@ -59,7 +59,7 @@ class Search extends Component {
               <span class="google-logo"><span class="google-R">R</span><span class="google-e">e</span><span class="google-o2">c</span><span class="google-R">i</span><span class="google-l">p</span><span class="google-o1">e</span><span class="google-R">-</span><span class="google-o1">o</span><span class="google-o2">o</span><span class="google-g">g</span><span class="google-l">l</span><span class="google-e">e</span></span>
 
               <div className="input-group input-group-sm">
-                <input className="form-control" type="text" /><button>Search</button>
+                <input id="form" className="form-control" type="text" /><button>Search</button>
               </div>
             </div>
           </div>
