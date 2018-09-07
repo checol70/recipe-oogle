@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import Container from "./components/Container";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import queryString from "query-string";
+import Home from "./components/Home";
+import Add from "./components/Add";
+import Search from "./components/Search";
+
 
 class App extends Component {
   state = {
@@ -29,6 +33,13 @@ class App extends Component {
           <Navbar displayName={this.state.displayName} />
           <Header />
           <Container>
+            <BrowserRouter>
+            <Switch>
+              <Route exact path="/" component={Home}/>
+              <Route exact path="/Search" component={Search}/>
+              <Route exact path="/Add" component={Add}/>
+            </Switch>
+            </BrowserRouter>
           </Container>
      </div>
         );
