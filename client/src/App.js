@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Container from "./components/Container";
-import Navbar from "./components/Navbar";
+import Header from "./components/Header";
+//import Navbar from "./components/Navbar";
 import Search from "./components/Search";
-import Add from "./pages/Add";
+import Add from "./pages/Add/";
 //import All from "./pages/All";
 //import Contact from "./pages/Contact";
 
@@ -13,7 +14,7 @@ class App extends Component {
 
   };
 
-  userLogin = ()=>{
+  userLogin = () => {
     this.setState({ displayName: window.localStorage.getItem("displayName") });
   }
 
@@ -23,20 +24,21 @@ class App extends Component {
     return (
       <div>
         {console.log(this.props)}
-          <Header />
-          <Container>
-            <BrowserRouter>
-            <Navbar />
-            <Switch>
-              <Route exact path="/" component={Search} login={this.userLogin}/>
-              <Route exact path="/add" component={Add}/>
-              {/*<Route component={noMatch}/>*/}
-            </Switch>
-            </BrowserRouter>
-          </Container>
-     </div>
-        );
-      }
-     };
-     
-     export default App;
+        <Header />
+        <Container>
+          <BrowserRouter>
+            <div>
+              <Switch>
+                <Route exact path="/" component={Search} login={this.userLogin} />
+                <Route exact path="/add" component={Add} />
+                {/*<Route component={noMatch}/>*/}
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </Container>
+      </div>
+    );
+  }
+};
+
+export default App;

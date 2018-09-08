@@ -1,4 +1,5 @@
-import { React, Component } from "react";
+import React, { Component } from "react";
+import Navbar from "../../components/Navbar";
 
 class Add extends Component {
 
@@ -17,12 +18,12 @@ class Add extends Component {
     this.setState({
       [name]: value
     });
-  };
+  }
 
   render() {
     return (
-
       <div className="container">
+      <Navbar />
         <h1>Add Recipe</h1>
         <form>
           <div className="form-group">

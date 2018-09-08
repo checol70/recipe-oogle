@@ -4,6 +4,7 @@ module.exports = function (app) {
     //this route will return all recipes in the database.
     app.get("/api/recipes/all", (req, res) => {
         db.Recipe.find({}).then(result => {
+            console.log(req.user)
             res.send(result);
         })
             .catch(err => {

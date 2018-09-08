@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import API from "../utils/API";
 import Container from "../Container";
+import Navbar from "../Navbar";
 //import SearchResults from "../components/SearchResults";
 //import Alert from "../components/Alert";
 import "./Search.css";
 import queryString from "query-string";
-import Navbar from "../Navbar";
+
 
 class Search extends Component {
   state = {
