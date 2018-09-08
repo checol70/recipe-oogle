@@ -105,7 +105,20 @@ module.exports = function (app) {
 
     //this is for adding recipes to the current users favorites.
     app.put("/api/recipes/:id/:token", (req, res)=>{
-        
+        db.User.findOne({token:req.params.token},(err, user)=>{
+            if(err) return console.log(err);
+            user.favoriteRecipes.push(req.params.id);
+            user.save((err, updUser) => {
+                db.Recipe.findById(req.params.id).exec((err, recipe)=>{
+                    recipe.users.push(updUser._id)
+                    recipe.save((err, updRecipe)=>{
+                        const {favoriteRecipes} = updUser
+                        //I am sending the favorites back so that the front end can update the favoriteRecipes state.
+                        res.send(favoriteRecipes);
+                    })
+                })
+            })
+        })
     })
 
     //this is for searching recipes
