@@ -15,16 +15,6 @@ class App extends Component {
 
   };
 
-  componentWillMount() {
-    var query = queryString.parse(this.props.location);
-    if (query.token) {
-      window.localStorage.setItem("tkn", query.token);
-      window.localStorage.setItem("displayName", query.displayName);
-      this.props.history.push("/");
-      this.setState({displayName: window.localStorage.getItem("displayName")})
-    }
-  }
-
   //need an a tag to localhost:3001/auth/google
   // render page
   render() {
