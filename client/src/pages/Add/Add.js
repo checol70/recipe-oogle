@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "../../components/Navbar";
+import "./Add.css";
 
 class Add extends Component {
 
@@ -22,25 +23,28 @@ class Add extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
       <Navbar />
-        <h1>Add Recipe</h1>
+      <div className="container">
+        <br></br>
+        <h2>Add Recipe</h2>
         <form>
           <div className="form-group">
-            <label for="exampleInputEmail1">Recipe Name</label>
+            <label className="label" for="exampleInputEmail1">Recipe Name</label>
             <input type="text" className="form-control" name="recipeName" placeholder="Fish Tacos" />
 
           </div>
           <div className="form-group">
-            <label for="ingredients">Ingredients</label>
+            <label className="label" for="ingredients">Ingredients</label>
             <input type="text" className="form-control" name="ingredients" placeholder="Fish, Tortilla, etc.." />
           </div>
           <div className="form-group">
-            <label className="form-check-label" for="exampleCheck1">Steps</label>
+            <label  className="form-check-label" for="exampleCheck1">Steps</label>
             <input type="text" className="form-control" name="steps" placeholder="Cook fish, place fish in tortilla, eat" />
           </div>
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
+      </div>
       </div>
     )
   }
