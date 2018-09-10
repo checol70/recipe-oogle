@@ -1,10 +1,10 @@
-var db = require("../models")
-
+var db = require("../models");
+var passport = require("passport");
 module.exports = function (app) {
     //this route will return all recipes in the database.
-    app.get("/api/recipes/all", (req, res) => {
+    app.get("/api/recipes/all", passport.authenticate("google"), (req, res) => {
         db.Recipe.find({}).then(result => {
-            console.log(req.user)
+            console.log(`req.user ${req.user}`)
             res.send(result);
         })
             .catch(err => {
@@ -16,12 +16,12 @@ module.exports = function (app) {
     //this is for retrieving another users recipes, so it doesn't need to be authed.
     app.get("/api/users/:displayName", (req, res) => {
         const regex = new RegExp(req.params.displayName, "i");
-        db.User.find({ $text: { $search: regex } }, (err, data)=>{
-            if(err) console.log(err);
+        db.User.find({ $text: { $search: regex } }, (err, data) => {
+            if (err) console.log(err);
             console.log(data);
-            
-            const arr = data.map(e=>{
-                const {displayName, favoriteRecipes} = e
+
+            const arr = data.map(e => {
+                const { displayName, favoriteRecipes } = e
                 console.log(displayName, favoriteRecipes)
                 return obj = {
                     displayName,
@@ -33,29 +33,28 @@ module.exports = function (app) {
     })
 
     //this route is for getting the current user's recipes.  please note the singular version of user.
-    app.get("/api/user/:token", (req,res)=>{
+    app.get("/api/user/:token", (req, res) => {
         console.log(req.cookies)
         db.User.findOne({ token: req.params.token }, (err, user) => {
-            if(err) return console.log(err);
+            if (err) return console.log(err);
             res.send(user.favoriteRecipes);
         })
     })
 
     //this route is for posting recipes.  the token argument is in the local storage if they have signed in.
-    app.post("/api/recipes/:token", (req, res) => {
-        db.User.findOne({ token: req.params.token }, (err, user) => {
-            if (err) console.log(err);
-            if (user !== null) {
-                req.body.originalUser = user._id;
-                req.body.users = [user.id];
-                db.Recipe.create(req.body, (err, recipe) => {
-                    user.favoriteRecipes.push(recipe._id);
-                    user.save((err, updUser) => {
-                        res.end();
-                    })
+    app.post("/api/recipes/", passport.authenticate("google", { session: false }), function (req, res) {
+        user = req.user
+        if (err) console.log(err);
+        if (user !== null) {
+            req.body.originalUser = user._id;
+            req.body.users = [user.id];
+            db.Recipe.create(req.body, (err, recipe) => {
+                user.favoriteRecipes.push(recipe._id);
+                user.save((err, updUser) => {
+                    res.end();
                 })
-            }
-        })
+            })
+        }
     })
 
     //this route is for removing a recipe from favorites
@@ -97,7 +96,7 @@ module.exports = function (app) {
                         })
                     });
                 }
-                else{
+                else {
                     res.end();
                 }
             }
@@ -105,15 +104,15 @@ module.exports = function (app) {
     })
 
     //this is for adding recipes to the current users favorites.
-    app.put("/api/recipes/:id/:token", (req, res)=>{
-        db.User.findOne({token:req.params.token},(err, user)=>{
-            if(err) return console.log(err);
+    app.put("/api/recipes/:id/:token", (req, res) => {
+        db.User.findOne({ token: req.params.token }, (err, user) => {
+            if (err) return console.log(err);
             user.favoriteRecipes.push(req.params.id);
             user.save((err, updUser) => {
-                db.Recipe.findById(req.params.id).exec((err, recipe)=>{
+                db.Recipe.findById(req.params.id).exec((err, recipe) => {
                     recipe.users.push(updUser._id)
-                    recipe.save((err, updRecipe)=>{
-                        const {favoriteRecipes} = updUser
+                    recipe.save((err, updRecipe) => {
+                        const { favoriteRecipes } = updUser
                         //I am sending the favorites back so that the front end can update the favoriteRecipes state.
                         res.send(favoriteRecipes);
                     })
@@ -123,10 +122,10 @@ module.exports = function (app) {
     })
 
     //this is for searching recipes
-    app.get("/api/recipes/:query", (req, res)=>{
+    app.get("/api/recipes/:query", (req, res) => {
         const regex = new RegExp(req.params.query, "i");
-        db.Recipe.find({$text:{$search:regex}}, (err, data)=>{
-            if(err) console.log(err);
+        db.Recipe.find({ $text: { $search: regex } }, (err, data) => {
+            if (err) console.log(err);
             res.send(data);
         })
     })

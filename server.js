@@ -88,7 +88,6 @@ function (req, res) {
     // Successful authentication, redirect home.
     const token = req.user.accessToken;
     const displayName = req.user.displayName;
-    console.log(req.user);
     res.redirect(`http://localhost:3000?token=${token}&displayName=${displayName}`);
 });
 
