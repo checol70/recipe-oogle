@@ -18,8 +18,9 @@ class Search extends Component {
   };
 
   componentWillMount() {
-    var query = queryString.parse(this.props.location);
-    if (query.token) {
+    var query = queryString.parse(this.props.location.search);
+    console.log(query)
+    if (query.displayName) {
       window.localStorage.setItem("tkn", query.token);
       window.localStorage.setItem("displayName", query.displayName);
       this.props.history.push("/");
