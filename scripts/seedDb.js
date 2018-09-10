@@ -46,13 +46,84 @@ const recipeSeed = [
             "1/3 C olive oil or more if needed"
         ],
         steps: [
-            "Combine balsamic vinegar, honey, mustard, garlic, oregano, salt and pepper in foot processor",
+            "Combine balsamic vinegar, honey, mustard, garlic, oregano, salt and pepper in food processor",
 
-            "Turn the foot processor on and pour olive oil in a steady stream into mixture until salad dressing is this and creamy.",
+            "Turn the food processor on and pour olive oil in a steady stream into mixture until salad dressing is this and creamy.",
 
             "Store up to 2 weeks in refrigerator in a shakable sealed container"
         ]
+    }, {
+        name: "Mom's Meatballs",
+        ingredients: [
+            "1 lb hamburger",
+            "1 Cup bread crumbs (torn bread soaked in a little water)",
+            "1 egg",
+            "1  t parsely",
+            "1 t garlic salt",
+            "2 T parmesian cheese",
+            "1/4 t pepper"
+        ],
+        steps: [
+            "Combine all ingredients",
+
+            "Line baking sheet with foil.",
+
+            "Roll mixture into balls about 1.25 inches in diameter and place evenly spaced on baking sheet.",
+
+            "Broil turning once until browned/cooked"
+
+        ]
+    }, {
+        name: "Red Rice",
+        ingredients: [
+            "2/3 C regular rice",
+            "2 T butter or margarine",
+            "1 can 14 1/2 oz Swansons chicken broth or 2 chicken bouillon cubes",
+            "1/2 cup mild salsa"
+        ],
+        steps: [
+            "Brown rice and melted butter in sauce pan",
+
+            "Stir in chicken broth and salsa",
+
+            "Heat to boiling and then reduce to low and cover",
+
+            "Stir often",
+
+            "Simmer for 20 minutes or until rice is tender and liquick is absorbed"
+
+        ]
+    }, {
+        name: "Sour Cream Chicken Enchiladas",
+        ingredients: [
+            "1 C cooked shredded chicken",
+            "1 C sour cream",
+            "1 small can green chilis",
+            "flour tortillas",
+            "enchilada sauce",
+            "shredded cheddar cheese",
+            "salt and pepper",
+            "salsa",
+            "2 T vegetable oil"
+        ],
+        steps: [
+            "Preheat oven to 350",
+
+            "Combine chicken, sour cream, green chilis, and salt and pepper to taste",
+
+            "Brown tortillas in skillet will a small amount of oil",
+
+            "Lightly grease baking dish",
+
+            "Spoon mixture into each tortilla, roll and place in backing dish",
+
+            "cover with enchilada sauce and top with shredded cheese.",
+
+            "Bake at 350 for approximately 15 minutes"
+
+        ]
     }
+
 ]
 //107597886067898717683
 //107597886067898710000

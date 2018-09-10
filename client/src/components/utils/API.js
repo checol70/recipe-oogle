@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // Export an object containing methods we'll use for accessing the Recipes Mongo DB
-// We will search for all receipes for a user, or for all recipes in general or
-// for recipes that meet a search name critera
+// We will search for all recipes for a user, or for all recipes in general or
+// for recipes that meet a search name criteria
 
 export default {
   getUserRecipes: function(userName) {

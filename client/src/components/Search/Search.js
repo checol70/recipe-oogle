@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import Container from "../Container";
 import Navbar from "../Navbar";
-//import SearchResults from "../components/SearchResults";
+import SearchResults from "../SearchResults";
 //import Alert from "../components/Alert";
 import "./Search.css";
 import queryString from "query-string";
@@ -38,7 +38,7 @@ class Search extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    API.getRecipe(this.state.search)
+    API.getSearchedRecipes(this.state.search)
       .then(res => {
         if (res.data.status === "error") {
           throw new Error(res.data.message);
@@ -50,21 +50,33 @@ class Search extends Component {
   render() {
     return (
       <div>
-        <Navbar displayName={this.state.displayName} location={this.props.location}/>
+        <Navbar displayName={this.state.displayName} location={this.props.location} />
         <Container style={{ minHeight: "80%" }}>
 
 
           <div className="container">
 
             <div className="jumbotron text-center">
-              <span class="google-logo"><span class="google-R">R</span><span class="google-e">e</span><span class="google-o2">c</span><span class="google-R">i</span><span class="google-l">p</span><span class="google-o1">e</span><span class="google-R">-</span><span class="google-o1">o</span><span class="google-o2">o</span><span class="google-g">g</span><span class="google-l">l</span><span class="google-e">e</span></span>
+              <span className="google-logo"><span className="google-R">R</span>
+                <span className="google-e">e</span><span className="google-o2">c</span>
+                <span className="google-R">i</span><span className="google-l">p</span>
+                <span className="google-o1">e</span><span className="google-R">-</span>
+                <span className="google-o1">o</span><span className="google-o2">o</span>
+                <span className="google-g">g</span><span className="google-l">l</span>
+                <span className="google-e">e</span></span>
 
               <div className="input-group input-group-sm">
-                <input id="form" className="form-control" type="text" /><button>Search</button>
+                <input id="form" className="form-control" type="text" />
+                <button
+                  onClick={this.handleFormSubmit}
+                  type="success"
+                >
+                  Search
+                </button>
               </div>
             </div>
           </div>
-          {/*<SearchResults results={this.state.results} />*/}
+          <SearchResults results={this.state.results} />
         </Container>
       </div>
     );
