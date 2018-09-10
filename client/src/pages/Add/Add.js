@@ -6,7 +6,8 @@ class Add extends Component {
   state = {
     recipeName: "",
     ingredients: "",
-    steps: ""
+    steps: "",
+    userID: ""
   }
 
   handleInputChange = event => {
@@ -19,11 +20,21 @@ class Add extends Component {
       [name]: value
     });
   }
-
+  handleFormSubmit = event => {
+    event.preventDefault();
+    API.postRecipes(this.state)
+      .then(res => {
+        
+      })
+      .catch(err => {
+        console.log(`error: ${err}`)
+        this.setState({ error: err })
+      });
+  };
   render() {
     return (
       <div className="container">
-      <Navbar />
+        <Navbar />
         <h1>Add Recipe</h1>
         <form>
           <div className="form-group">
@@ -39,7 +50,10 @@ class Add extends Component {
             <label className="form-check-label" for="exampleCheck1">Steps</label>
             <input type="text" className="form-control" name="steps" placeholder="Cook fish, place fish in tortilla, eat" />
           </div>
-          <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary"
+            onClick={this.handleFormSubmit}
+            type="success"
+          >Submit</button>
         </form>
       </div>
     )

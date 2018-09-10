@@ -42,8 +42,9 @@ module.exports = function (app) {
     })
 
     //this route is for posting recipes.  the token argument is in the local storage if they have signed in.
-    app.post("/api/recipes/", passport.authenticate("google", { session: false }), function (req, res) {
+    app.post("/api/recipes/:token", (req, res) {
         user = req.user
+        console.log("in app.post for user: " + user);
         if (err) console.log(err);
         if (user !== null) {
             req.body.originalUser = user._id;
