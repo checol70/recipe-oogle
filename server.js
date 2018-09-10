@@ -16,14 +16,14 @@ const API = require("./routes/api-routes");
 
 //here is where we will put middleware
 app.use(session({
-    secret:config.secret,
+    secret:"SuperDuperSecret",
     resave:false,
     saveUninitialized:true,
     cookie: {secure:true}
 }))
 app.use(passport.initialize())
 app.use(passport.session());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 //app.use(session({ secret: config.secret }))
 app.use(cookieParser())
@@ -86,8 +86,8 @@ app.get('/auth/google/callback',
 passport.authenticate('google', { failureRedirect: '/auth/google' }),
 function (req, res) {
     // Successful authentication, redirect home.
-    var token = req.user.accessToken;
-    var displayName = req.user.displayName;
+    const token = req.user.accessToken;
+    const displayName = req.user.displayName;
     res.redirect(`http://localhost:3000?token=${token}&displayName=${displayName}`);
 });
 
