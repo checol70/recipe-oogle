@@ -14,7 +14,7 @@ class Search extends Component {
     results: [],
     userID: "",
     error: "",
-    displayName: window.localStorage.getItem("displayName")
+    displayName: ""
   }
 
 
