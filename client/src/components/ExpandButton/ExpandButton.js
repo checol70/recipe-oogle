@@ -1,13 +1,11 @@
 import React from "react";
-import "./SearchResults.css";
+import "./ExpandButton.css";
 
-const SearchResults = props => {
+const ExpandButton = props => {
     return props.results.map(recipe =>
         <li>
             {recipe.name}
     </li>
     );
 }
-export default SearchResults;
-
-
+export default ExpandButton;

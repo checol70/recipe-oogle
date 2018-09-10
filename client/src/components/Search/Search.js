@@ -12,25 +12,10 @@ class Search extends Component {
   state = {
     search: "",
     results: [],
-    userID: ""
+    userID: "",
+    error: ""
   };
 
-  componentWillMount() {
-    var query = queryString.parse(this.props.location.search);
-    if (query.token) {
-      window.localStorage.setItem("tkn", query.token);
-      window.localStorage.setItem("displayName", query.displayName);
-      this.props.history.push("/");
-      this.props.login();
-    }
-  }
-
-  //   // When the component mounts, get a list of all available recipes???
-  //   componentDidMount() {
-  //     API.getBaseBreedsList()
-  //       .then(res => this.setState({ breeds: res.data.message }))
-  //       .catch(err => console.log(err));
-  //   }
 
   handleInputChange = event => {
     this.setState({ "search": event.target.value });
@@ -40,12 +25,13 @@ class Search extends Component {
     event.preventDefault();
     API.getSearchedRecipes(this.state.search)
       .then(res => {
-        if (res.data.status === "error") {
-          throw new Error(res.data.message);
-        }
-        this.setState({ results: res.data.message, error: "" });
+        console.log(res);
+        this.setState({ results: res.data});
       })
-      .catch(err => this.setState({ error: err.message }));
+      .catch(err => {
+        this.setState({error: err})
+      console.log(`error: ${err}`)
+      });
   };
   render() {
     return (

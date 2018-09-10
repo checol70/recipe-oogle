@@ -12,7 +12,7 @@ const Navbar = props => (
       {console.log(props)}
 
       <div>
-        <p> Welcome {window.localStorage.getItem("displayName")}
+        <p> Welcome {this.props.displayName}
           <span className="login">
             <a href="localhost:3001/auth/google">Log in!</a>
           </span>
