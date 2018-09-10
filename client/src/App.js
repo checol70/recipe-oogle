@@ -22,7 +22,6 @@ class App extends Component {
       window.localStorage.setItem("displayName", query.displayName);
       this.props.history.push("/");
       this.setState({displayName: window.localStorage.getItem("displayName")})
-      console.log(this.state.displayName);
     }
   }
 
