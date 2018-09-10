@@ -12,7 +12,8 @@ class Search extends Component {
   state = {
     search: "",
     results: [],
-    userID: ""
+    userID: "",
+    error:""
   };
 
   componentWillMount() {
@@ -21,7 +22,6 @@ class Search extends Component {
       window.localStorage.setItem("tkn", query.token);
       window.localStorage.setItem("displayName", query.displayName);
       this.props.history.push("/");
-      this.props.login();
     }
   }
 
@@ -40,12 +40,12 @@ class Search extends Component {
     event.preventDefault();
     API.getSearchedRecipes(this.state.search)
       .then(res => {
-        if (res.data.status === "error") {
-          throw new Error(res.data.message);
-        }
-        this.setState({ results: res.data.message, error: "" });
+        this.setState({ results: res.data });
       })
-      .catch(err => this.setState({ error: err.message }));
+      .catch(err => {
+        console.log(`error: ${err}`)
+        this.setState({error: err})
+      });
   };
   render() {
     return (

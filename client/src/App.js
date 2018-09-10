@@ -7,6 +7,7 @@ import Search from "./components/Search";
 import Add from "./pages/Add/";
 //import All from "./pages/All";
 //import Contact from "./pages/Contact";
+import queryString from "query-string";
 
 class App extends Component {
   state = {
@@ -14,8 +15,15 @@ class App extends Component {
 
   };
 
-  userLogin = () => {
-    this.setState({ displayName: window.localStorage.getItem("displayName") });
+  componentWillMount() {
+    var query = queryString.parse(this.props.location);
+    if (query.token) {
+      window.localStorage.setItem("tkn", query.token);
+      window.localStorage.setItem("displayName", query.displayName);
+      this.props.history.push("/");
+      this.setState({displayName: window.localStorage.getItem("displayName")})
+      console.log(this.state.displayName);
+    }
   }
 
   //need an a tag to localhost:3001/auth/google
@@ -23,8 +31,6 @@ class App extends Component {
   render() {
     return (
       <div>
-        {console.log(this.props)}
-  
         <Container>
           <BrowserRouter>
             <div>

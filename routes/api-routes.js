@@ -33,7 +33,7 @@ module.exports = function (app) {
     })
 
     //this route is for getting the current user's recipes.  please note the singular version of user.
-    app.get("/api/user/:token", (req, res) => {
+    app.get("/api/user/", passport.authenticate("google"),(req, res) => {
         console.log(req.cookies)
         db.User.findOne({ token: req.params.token }, (err, user) => {
             if (err) return console.log(err);
@@ -129,4 +129,4 @@ module.exports = function (app) {
             res.send(data);
         })
     })
-}
+}   
