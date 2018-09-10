@@ -14,7 +14,7 @@ const Navbar = props => (
       <div>
         <p> Welcome {window.localStorage.getItem("displayName")}
           <span className="login">
-            <a href="https://www.google.com">Log in!</a>
+            <a href="localhost:3001/auth/google">Log in!</a>
           </span>
         </p>
 

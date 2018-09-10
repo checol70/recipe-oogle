@@ -33,7 +33,7 @@ class Search extends Component {
   //   }
 
   handleInputChange = event => {
-    this.setState({ "name": event.target.value });
+    this.setState({ "search": event.target.value });
   };
 
   handleFormSubmit = event => {
@@ -66,7 +66,7 @@ class Search extends Component {
                 <span className="google-e">e</span></span>
 
               <div className="input-group input-group-sm">
-                <input id="form" className="form-control" type="text" />
+                <input id="form" className="form-control" type="text" onChange={this.handleInputChange}/>
                 <button
                   onClick={this.handleFormSubmit}
                   type="success"
