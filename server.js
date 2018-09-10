@@ -25,7 +25,6 @@ app.use(passport.initialize())
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-//app.use(session({ secret: config.secret }))
 app.use(cookieParser())
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
