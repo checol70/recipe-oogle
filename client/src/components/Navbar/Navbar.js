@@ -53,17 +53,7 @@ const Navbar = props => (
               All Recipes
       </Link>
           </li>
-          <li className="nav-item">
-            <Link
-              to="/contact"
-              className={
-                /*  props.location.pathname === "/contact" ? "nav-link active" : "nav-link" */
-                "nav-link"
-              }
-            >
-              Contact
-      </Link>
-          </li>
+          
         </ul>
       </div>
     </nav>
