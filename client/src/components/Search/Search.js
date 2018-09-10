@@ -13,8 +13,9 @@ class Search extends Component {
     search: "",
     results: [],
     userID: "",
-    error: ""
-  };
+    error: "",
+    displayName: window.localStorage.getItem("displayName")
+  }
 
 
   handleInputChange = event => {
@@ -25,12 +26,11 @@ class Search extends Component {
     event.preventDefault();
     API.getSearchedRecipes(this.state.search)
       .then(res => {
-        console.log(res);
-        this.setState({ results: res.data});
+        this.setState({ results: res.data });
       })
       .catch(err => {
+        console.log(`error: ${err}`)
         this.setState({error: err})
-      console.log(`error: ${err}`)
       });
   };
   render() {
