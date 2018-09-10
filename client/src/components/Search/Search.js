@@ -13,15 +13,17 @@ class Search extends Component {
     search: "",
     results: [],
     userID: "",
-    error:""
+    error:"",
+    displayName:window.localStorage.getItem("displayName")
   };
 
   componentWillMount() {
-    var query = queryString.parse(this.props.location.search);
+    var query = queryString.parse(this.props.location);
     if (query.token) {
       window.localStorage.setItem("tkn", query.token);
       window.localStorage.setItem("displayName", query.displayName);
       this.props.history.push("/");
+      this.setState({displayName: window.localStorage.getItem("displayName")})
     }
   }
 
