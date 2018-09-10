@@ -2,7 +2,7 @@ var db = require("../models");
 var passport = require("passport");
 module.exports = function (app) {
     //this route will return all recipes in the database.
-    app.get("/api/recipes/all", passport.authenticate("google"), (req, res) => {
+    app.get("/api/recipes/all", (req, res) => {
         db.Recipe.find({}).then(result => {
             console.log(`req.user ${req.user}`)
             res.send(result);
@@ -33,29 +33,32 @@ module.exports = function (app) {
     })
 
     //this route is for getting the current user's recipes.  please note the singular version of user.
-    app.get("/api/user/", passport.authenticate("google"),(req, res) => {
+    app.get("/api/user/:token", (req,res)=>{
         console.log(req.cookies)
         db.User.findOne({ token: req.params.token }, (err, user) => {
-            if (err) return console.log(err);
+            if(err) return console.log(err);
             res.send(user.favoriteRecipes);
         })
     })
 
     //this route is for posting recipes.  the token argument is in the local storage if they have signed in.
-    app.post("/api/recipes/:token", (req, res) {
-        user = req.user
-        console.log("in app.post for user: " + user);
-        if (err) console.log(err);
-        if (user !== null) {
-            req.body.originalUser = user._id;
-            req.body.users = [user.id];
-            db.Recipe.create(req.body, (err, recipe) => {
-                user.favoriteRecipes.push(recipe._id);
-                user.save((err, updUser) => {
-                    res.end();
+    app.post("/api/recipes/:token", (req, res) => {
+        console.log("in api-routes.js app.post");
+        db.User.findOne({ token: req.params.token }, (err, user) => {
+            console.log("in user.findOne")
+            if (err) console.log(err);
+           
+                console.log("now im here")
+                req.body.originalUser = user._id;
+                req.body.users = [user.id];
+                db.Recipe.create(req.body, (err, recipe) => {
+                    user.favoriteRecipes.push(recipe._id);
+                    user.save((err, updUser) => {
+                        res.end();
+                    })
                 })
-            })
-        }
+           
+        })
     })
 
     //this route is for removing a recipe from favorites
@@ -97,7 +100,7 @@ module.exports = function (app) {
                         })
                     });
                 }
-                else {
+                else{
                     res.end();
                 }
             }
@@ -130,4 +133,4 @@ module.exports = function (app) {
             res.send(data);
         })
     })
-}   
+}

@@ -14,7 +14,7 @@ export default {
   getSearchedRecipes: function(search) {
     return axios.get("/api/recipes/" + search);
   },
-  postRecipes: function(search) {
-    return axios.post("/api/recipes/" + search);
+  postRecipes: function(recipe) {
+    return axios.post("/api/recipes/" + window.localStorage.getItem("tkn"), recipe);
   }
 };

@@ -85,7 +85,7 @@ app.get('/auth/google/callback',
 passport.authenticate('google', { failureRedirect: '/auth/google' }),
 function (req, res) {
     // Successful authentication, redirect home.
-    const token = req.user.accessToken;
+    const token = req.user.token;
     const displayName = req.user.displayName;
     res.redirect(`http://localhost:3000?token=${token}&displayName=${displayName}`);
 });
