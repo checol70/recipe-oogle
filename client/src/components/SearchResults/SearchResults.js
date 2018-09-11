@@ -8,7 +8,7 @@ function SearchResults(props) {
             {props.results.map((recipe, int) => {
 
                 return (
-                    <li key={int + "res"} >
+                    <li key={int + "res"} className="expander">
                         <ExpandButton className="expand-button" onClick={() => { props.changeExpanded(int) }} expanded={recipe.expanded} />
                         <h3>{recipe.name}</h3>
                         {recipe.expanded ?
