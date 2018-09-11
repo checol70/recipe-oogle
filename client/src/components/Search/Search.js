@@ -80,7 +80,7 @@ class Search extends Component {
                 <span className="google-g">g</span><span className="google-l">l</span>
                 <span className="google-e">e</span></span>
 
-              <div className="input-group input-group-sm" >
+              
               <form className="input-group input-group-sm" onSubmit={(e)=>this.modifyTask(e)}>
                 <input id="form" className="form-control" type="text" onChange={this.handleInputChange}  />
 
@@ -93,7 +93,7 @@ class Search extends Component {
                 </form>
               </div>
             </div>
-          </div>
+          
           <SearchResults results={this.state.results} changeExpanded={this.changeExpanded} />
         </Container>
       </div>
