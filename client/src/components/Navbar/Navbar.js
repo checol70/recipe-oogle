@@ -13,6 +13,7 @@ const Navbar = props => (
 
       <div className="container">
         <p className="Name"> Welcome {window.localStorage.getItem("displayName")}
+          <span>  </span>
           <span className="login">
             <a href="http://localhost:3001/auth/google">Log in!</a>
           </span>
@@ -52,17 +53,7 @@ const Navbar = props => (
               All Recipes
       </Link>
           </li>
-          <li className="nav-item">
-            <Link
-              to="/contact"
-              className={
-                /*  props.location.pathname === "/contact" ? "nav-link active" : "nav-link" */
-                "nav-link"
-              }
-            >
-              Contact
-      </Link>
-          </li>
+
         </ul>
       </div>
     </nav>

@@ -13,8 +13,8 @@ class Search extends Component {
     search: "",
     results: [],
     userID: "",
-    error:"",
-    displayName:window.localStorage.getItem("displayName")
+    error: "",
+    displayName: window.localStorage.getItem("displayName")
   };
 
   componentWillMount() {
@@ -24,7 +24,7 @@ class Search extends Component {
       window.localStorage.setItem("tkn", query.token);
       window.localStorage.setItem("displayName", query.displayName);
       this.props.history.push("/");
-      this.setState({displayName: window.localStorage.getItem("displayName")})
+      this.setState({ displayName: window.localStorage.getItem("displayName") })
     }
   }
 
@@ -47,7 +47,7 @@ class Search extends Component {
       })
       .catch(err => {
         console.log(`error: ${err}`)
-        this.setState({error: err})
+        this.setState({ error: err })
       });
   };
   render() {
@@ -69,8 +69,8 @@ class Search extends Component {
                 <span className="google-e">e</span></span>
 
               <div className="input-group input-group-sm">
-                <input id="form" className="form-control" type="text" onChange={this.handleInputChange}/>
-                <button
+                <input id="form" className="form-control" type="text" onChange={this.handleInputChange} />
+                <button className="btn btn-primary"
                   onClick={this.handleFormSubmit}
                   type="success"
                 >
