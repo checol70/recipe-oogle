@@ -1,28 +1,41 @@
-import React from "react";
+import React, { Component } from "react";
 import "./SearchResults.css";
+import ExpandButton from "../ExpandButton";
 
-// // SearchResults renders a bootstrap list item from 08-Stu- RecipeList.js
-// export const SearchResults = props => (
+function SearchResults(props) {
+    return (
+        <ul>
+            {props.results.map((recipe, int) => {
 
-//     <ul className="list-group">{props.children}</ul>
-//   );
-
-// const SearchResults = props => {
-//     const recipes = props.results.map(recipe =>
-
-//         <li>
-//             {recipe.name}
-
-//     </li>
-//     );
-// }
-const SearchResults = props => {
-    return props.results.map(recipe =>
-        <li>
-            {recipe.name}
-    </li>
-    );
+                return (
+                    <li key={int + "res"} >
+                        <ExpandButton className="expand-button" onClick={() => { props.changeExpanded(int) }} expanded={recipe.expanded} />
+                        <h3>{recipe.name}</h3>
+                        {recipe.expanded ?
+                            <div>
+                                <ul>
+                                    {recipe.ingredients.map((ingred, ingrednum) => {
+                                        return <li key={"ing" + ingrednum}><p>{ingred}</p></li>
+                                    })}
+                                </ul>
+                                <br></br>
+                                <ol>
+                                    {recipe.steps.map((step, stepNum) => {
+                                        return <li key={"step" + stepNum}><p>{step}</p></li>
+                                    })}
+                                </ol>
+                            </div> :
+                            <div>
+                            </div>
+                        }
+                    </li>
+                )
+            })
+            }
+        </ul>
+    )
 }
+
 export default SearchResults;
 
 

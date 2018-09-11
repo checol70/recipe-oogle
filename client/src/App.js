@@ -8,6 +8,7 @@ import Add from "./pages/Add/";
 //import All from "./pages/All";
 //import Contact from "./pages/Contact";
 import queryString from "query-string";
+import MyFavorites from './pages/MyFavorites';
 
 class App extends Component {
   state = {
@@ -26,6 +27,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Search} login={this.userLogin} />
                 <Route exact path="/add" component={Add} />
+                <Route exact path="/myfavorites" component = {MyFavorites}/>
                 {/*<Route component={noMatch}/>*/}
               </Switch>
             </div>
