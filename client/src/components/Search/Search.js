@@ -80,15 +80,17 @@ class Search extends Component {
                 <span className="google-g">g</span><span className="google-l">l</span>
                 <span className="google-e">e</span></span>
 
-              <div className="input-group input-group-sm">
-                <input id="form" className="form-control" type="text" onChange={this.handleInputChange} />
+              <div className="input-group input-group-sm" >
+              <form className="input-group input-group-sm" onSubmit={(e)=>this.modifyTask(e)}>
+                <input id="form" className="form-control" type="text" onChange={this.handleInputChange}  />
 
-                <button className="btn btn-primary"
+                <button  className="btn btn-primary"
                   onClick={this.handleFormSubmit}
-                  type="success"
+                  type="submit"
                 >
                   Search
                 </button>
+                </form>
               </div>
             </div>
           </div>
