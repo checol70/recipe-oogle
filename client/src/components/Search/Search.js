@@ -64,7 +64,7 @@ class Search extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <Navbar displayName={this.state.displayName} location={this.props.location} />
         <Container style={{ minHeight: "80%" }}>
 
