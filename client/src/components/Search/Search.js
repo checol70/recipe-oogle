@@ -5,7 +5,6 @@ import Navbar from "../Navbar";
 import SearchResults from "../SearchResults";
 //import Alert from "../components/Alert";
 import "./Search.css";
-import queryString from "query-string";
 
 
 class Search extends Component {
@@ -18,7 +17,7 @@ class Search extends Component {
   };
 
   componentWillMount() {
-    var query = queryString.parse(this.props.location.search);
+    var query = this.parse(this.props.location.search);
     console.log(query)
     if (query.token) {
       window.localStorage.setItem("tkn", query.token);
@@ -28,6 +27,26 @@ class Search extends Component {
     }
   }
 
+  parse(str) {
+
+    if (str != null && str.length > 0 && str.charAt(str.length - 1) === '#') {
+      str = str.substring(0, str.length - 1);
+    }
+    str=str.replace("%20", " ")
+    const strArr = str.trim().split("?");
+  
+    if (strArr.length >= 2) {
+      str = strArr[1];
+    } else {
+      return null;
+    }
+    const obj = {};
+    str.split("&").forEach(function (param) {
+      var parts = param.replace(/\+/g, ' ').split('=');
+      obj[parts[0]] = parts[1];
+    })
+    return obj;
+  }
 
   handleInputChange = event => {
     this.setState({ "search": event.target.value });
@@ -64,7 +83,7 @@ class Search extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <Navbar displayName={this.state.displayName} location={this.props.location} />
         <Container style={{ minHeight: "80%" }}>
 
@@ -80,20 +99,18 @@ class Search extends Component {
                 <span className="google-g">g</span><span className="google-l">l</span>
                 <span className="google-e">e</span></span>
 
-              
-              <form className="input-group input-group-sm" onSubmit={(e)=>this.modifyTask(e)}>
-                <input id="form" className="form-control" type="text" onChange={this.handleInputChange}  />
+              <div className="input-group input-group-sm">
+                <input id="form" className="form-control" type="text" onChange={this.handleInputChange} />
 
-                <button  className="btn btn-primary"
+                <button className="btn btn-primary"
                   onClick={this.handleFormSubmit}
-                  type="submit"
+                  type="success"
                 >
                   Search
                 </button>
-                </form>
               </div>
             </div>
-          
+          </div>
           <SearchResults results={this.state.results} changeExpanded={this.changeExpanded} />
         </Container>
       </div>
