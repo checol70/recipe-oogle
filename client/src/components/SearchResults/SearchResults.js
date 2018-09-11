@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./SearchResults.css";
 import ExpandButton from "../ExpandButton";
 
+
 function SearchResults(props) {
     return (
         <ul>

@@ -5,6 +5,7 @@ import "./Navbar.css";
 
 
 // Depending on the current path, this component sets the "active" class on the appropriate navigation link item
+//{console.log(props)} 
 const Navbar = props => (
   <div className="container">
 
@@ -12,6 +13,7 @@ const Navbar = props => (
 
       <div className="container">
         <p className="Name"> Welcome {window.localStorage.getItem("displayName")}
+          <span>  </span>
           <span className="login">
             <a href="http://localhost:3001/auth/google">Log in!</a>
           </span>

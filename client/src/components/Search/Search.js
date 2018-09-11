@@ -28,12 +28,6 @@ class Search extends Component {
     }
   }
 
-  //   // When the component mounts, get a list of all available recipes???
-  //   componentDidMount() {
-  //     API.getBaseBreedsList()
-  //       .then(res => this.setState({ breeds: res.data.message }))
-  //       .catch(err => console.log(err));
-  //   }
 
   handleInputChange = event => {
     this.setState({ "search": event.target.value });
@@ -88,7 +82,8 @@ class Search extends Component {
 
               <div className="input-group input-group-sm">
                 <input id="form" className="form-control" type="text" onChange={this.handleInputChange} />
-                <button
+
+                <button className="btn btn-primary"
                   onClick={this.handleFormSubmit}
                   type="success"
                 >
