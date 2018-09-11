@@ -87,7 +87,7 @@ function (req, res) {
     // Successful authentication, redirect home.
     const token = req.user.googleId;
     const displayName = req.user.displayName;
-    res.redirect(`http://localhost:3000?token=${token}&displayName=${displayName}`);
+    res.redirect(`https://recipeoogle.herokuapp.com/?token=${token}&displayName=${displayName}`);
 });
 
 
