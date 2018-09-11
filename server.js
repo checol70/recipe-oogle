@@ -72,7 +72,7 @@ if (process.env.NODE_ENV === "production") {
 
 
 passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    done(null, user._id);
 });
 passport.deserializeUser(function (id, done) {
     db.User.findById(id, function (err, user) {
@@ -90,14 +90,7 @@ function (req, res) {
     res.redirect(`http://localhost:3000?token=${token}&displayName=${displayName}`);
 });
 
-// router.get(
-//     "/auth/google/callback",
-//     passport.authenticate("google", { failureRedirect: "/", session: false }),
-//     function(req, res) {
-//         var token = req.user.token;
-//         res.redirect("http://localhost:3000?token=" + token);
-//     }
-// );
+
 
 API(app);
 // Send every other request to the React app
@@ -105,8 +98,6 @@ API(app);
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
-// (express.static)
-// require("./config/passport");
 
 app.listen(PORT, () => {
     console.log(`🌎 ==> Server now on port ${PORT}!`);
