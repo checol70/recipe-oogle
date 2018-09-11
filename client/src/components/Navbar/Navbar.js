@@ -9,7 +9,6 @@ const Navbar = props => (
   <div className="container">
 
     <nav className="navbar navbar-expand-md navbar-light bg-light">
-      {console.log(props)}
 
       <div className="container">
         <p className="Name"> Welcome {window.localStorage.getItem("displayName")}
@@ -53,7 +52,17 @@ const Navbar = props => (
               All Recipes
       </Link>
           </li>
-
+          <li className="nav-item">
+            <Link
+              to="/myfavorites"
+              className={
+                /*  props.location.pathname === "/contact" ? "nav-link active" : "nav-link" */
+                "nav-link"
+              }
+            >
+              Contact
+      </Link>
+          </li>
         </ul>
       </div>
     </nav>

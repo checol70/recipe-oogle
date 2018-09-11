@@ -20,7 +20,7 @@ class Search extends Component {
   componentWillMount() {
     var query = queryString.parse(this.props.location.search);
     console.log(query)
-    if (query.displayName) {
+    if (query.token) {
       window.localStorage.setItem("tkn", query.token);
       window.localStorage.setItem("displayName", query.displayName);
       this.props.history.push("/");
@@ -43,6 +43,9 @@ class Search extends Component {
     event.preventDefault();
     API.getSearchedRecipes(this.state.search)
       .then(res => {
+        res.data.forEach(e => {
+          e.expanded = false;
+        })
         this.setState({ results: res.data });
       })
       .catch(err => {
@@ -50,6 +53,21 @@ class Search extends Component {
         this.setState({ error: err })
       });
   };
+
+  //this should be passed down to the expand button!
+  changeExpanded = i => {
+    this.setState({
+      results: this.state.results.map((element, index) => {
+        if (index !== i) {
+          return element;
+        } else {
+          element.expanded = !element.expanded;
+          return element;
+        }
+      })
+    })
+  }
+
   render() {
     return (
       <div>
@@ -70,6 +88,7 @@ class Search extends Component {
 
               <div className="input-group input-group-sm">
                 <input id="form" className="form-control" type="text" onChange={this.handleInputChange} />
+
                 <button className="btn btn-primary"
                   onClick={this.handleFormSubmit}
                   type="success"
@@ -79,7 +98,7 @@ class Search extends Component {
               </div>
             </div>
           </div>
-          <SearchResults results={this.state.results} />
+          <SearchResults results={this.state.results} changeExpanded={this.changeExpanded} />
         </Container>
       </div>
     );
