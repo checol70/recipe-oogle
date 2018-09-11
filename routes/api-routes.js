@@ -35,7 +35,7 @@ module.exports = function (app) {
     //this route is for getting the current user's recipes.  please note the singular version of user.
     app.get("/api/user/:token", (req,res)=>{
         console.log(req.cookies)
-        db.User.findOne({ token: req.params.token }, (err, user) => {
+        db.User.findOne({ googleId: req.params.token }, (err, user) => {
             if(err) return console.log(err);
             res.send(user.favoriteRecipes);
         })
@@ -43,9 +43,7 @@ module.exports = function (app) {
 
     //this route is for posting recipes.  the token argument is in the local storage if they have signed in.
     app.post("/api/recipes/:token", (req, res) => {
-        console.log("in api-routes.js app.post");
-        db.User.findOne({ token: req.params.token }, (err, user) => {
-            console.log("in user.findOne")
+        db.User.findOne({ googleId: req.params.token }, (err, user) => {
             if (err) console.log(err);
            
                 console.log("now im here")
@@ -67,7 +65,7 @@ module.exports = function (app) {
         const token = req.params.token;
         const id = req.params.recipeId;
         //Here we are finding the user, so that we can remove the recipe from their favorites.  I am making sure that they are authed to keep others from hacking your account and then deleting everything.
-        db.User.findOne({ token: token }, (err, user) => {
+        db.User.findOne({googleId: token }, (err, user) => {
             if (user !== null) {
                 //this removes the reference from the user.
 
@@ -109,7 +107,7 @@ module.exports = function (app) {
 
     //this is for adding recipes to the current users favorites.
     app.put("/api/recipes/:id/:token", (req, res) => {
-        db.User.findOne({ token: req.params.token }, (err, user) => {
+        db.User.findOne({ googleId: req.params.token }, (err, user) => {
             if (err) return console.log(err);
             user.favoriteRecipes.push(req.params.id);
             user.save((err, updUser) => {
