@@ -28,12 +28,6 @@ class Search extends Component {
     }
   }
 
-  //   // When the component mounts, get a list of all available recipes???
-  //   componentDidMount() {
-  //     API.getBaseBreedsList()
-  //       .then(res => this.setState({ breeds: res.data.message }))
-  //       .catch(err => console.log(err));
-  //   }
 
   handleInputChange = event => {
     this.setState({ "search": event.target.value });

@@ -5,6 +5,7 @@ import "./Navbar.css";
 
 
 // Depending on the current path, this component sets the "active" class on the appropriate navigation link item
+//{console.log(props)} 
 const Navbar = props => (
   <div className="container">
 

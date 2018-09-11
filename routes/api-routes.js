@@ -45,7 +45,8 @@ module.exports = function (app) {
     app.post("/api/recipes/:token", (req, res) => {
         db.User.findOne({ googleId: req.params.token }, (err, user) => {
             if (err) console.log(err);
-            if (user !== null) {
+           
+                console.log("now im here")
                 req.body.originalUser = user._id;
                 req.body.users = [user.id];
                 db.Recipe.create(req.body, (err, recipe) => {
@@ -54,7 +55,7 @@ module.exports = function (app) {
                         res.end();
                     })
                 })
-            }
+           
         })
     })
 
