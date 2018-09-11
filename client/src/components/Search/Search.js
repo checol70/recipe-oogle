@@ -88,7 +88,8 @@ class Search extends Component {
 
               <div className="input-group input-group-sm">
                 <input id="form" className="form-control" type="text" onChange={this.handleInputChange} />
-                <button
+
+                <button className="btn btn-primary"
                   onClick={this.handleFormSubmit}
                   type="success"
                 >
