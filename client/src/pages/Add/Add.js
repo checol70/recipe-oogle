@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import Navbar from "../../components/Navbar";
+import API from "../..//components/utils/API";
 import "./Add.css";
 
 class Add extends Component {
 
   state = {
-    recipeName: "",
+    name: "",
     ingredients: "",
     steps: ""
   }
@@ -20,36 +21,61 @@ class Add extends Component {
       [name]: value
     });
   }
+  handleFormSubmit = event => {
+    event.preventDefault();
+
+    // convert list of ingredients from a comma delimited string into an array
+    const obj = this.state;
+    //console.log(this.state);
+
+    const ingArray = obj.ingredients.split(",");
+
+    // convert steps from a comma delimited string into an array
+    const stepsArray = obj.steps.split(",");
+
+    console.log("about to call API postRecipes");
+    console.log("obj.ingredients " + obj.ingredients);
+    API.postRecipes({
+      name: this.state.name,
+      ingredients: ingArray,
+      steps: stepsArray
+    })
+      .then(res => {
+        this.setState({name: "", ingredients: "", steps: ""});
+
+      })
+      .catch(err => {
+        console.log(`error: ${err}`);
+        this.setState({ error: err });
+      })
+  };
 
   render() {
     return (
-      <div>
+      <div className="container">
         <Navbar />
-        <div className="container">
-          <br></br>
-          <div className="add">Add a<span> </span>
-            <span className="google-logo"><span className="google-R">R</span>
-              <span className="google-e">e</span><span className="google-o2">c</span>
-              <span className="google-R">i</span><span className="google-l">p</span>
-              <span className="google-o1">e</span></span></div>
-          <br></br>
-          <form>
-            <div className="form-group">
-              <label className="label" for="exampleInputEmail1">Recipe Name</label>
-              <input type="text" className="form-control" name="recipeName" placeholder="Fish Tacos" />
+        <h1>Add Recipe</h1>
+        <form>
+          <div className="form-group">
+            <label htmlFor="exampleInputEmail1">Recipe Name</label>
+            <input type="text" className="form-control" name="name" placeholder="Fish Tacos" 
+            onChange = {this.handleInputChange}/>
 
-            </div>
-            <div className="form-group">
-              <label className="label" for="ingredients">Ingredients</label>
-              <input type="text" className="form-control" name="ingredients" placeholder="Fish, Tortilla, etc.." />
-            </div>
-            <div className="form-group">
-              <label className="form-check-label" for="exampleCheck1">Steps</label>
-              <input type="text" className="form-control" name="steps" placeholder="Cook fish, place fish in tortilla, eat" />
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-          </form>
-        </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="ingredients">Ingredients</label>
+            <input type="text" className="form-control" name="ingredients" placeholder="Fish, Tortilla, etc.." 
+            onChange = {this.handleInputChange}/>
+          </div>
+          <div className="form-group">
+            <label className="form-check-label" htmlFor="exampleCheck1">Steps</label>
+            <input type="text" className="form-control" name="steps" placeholder="Cook fish, place fish in tortilla, eat" 
+            onChange = {this.handleInputChange}/>
+          </div>
+          <button type="submit" className="btn btn-primary"
+            onClick={this.handleFormSubmit}
+          >Submit</button>
+        </form>
       </div>
     )
   }
