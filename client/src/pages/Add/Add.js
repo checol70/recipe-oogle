@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../../components/Navbar";
 import API from "../..//components/utils/API";
+import "./Add.css";
 
 class Add extends Component {
 

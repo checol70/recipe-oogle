@@ -11,9 +11,9 @@ const Navbar = props => (
 
     <nav className="navbar navbar-expand-md navbar-light bg-light">
 
-
       <div className="container">
         <p className="Name"> Welcome {window.localStorage.getItem("displayName")}
+          <span>  </span>
           <span className="login">
             <a href="http://localhost:3001/auth/google">Log in!</a>
           </span>
@@ -55,7 +55,7 @@ const Navbar = props => (
           </li>
           <li className="nav-item">
             <Link
-              to="/contact"
+              to="/myfavorites"
               className={
                 /*  props.location.pathname === "/contact" ? "nav-link active" : "nav-link" */
                 "nav-link"

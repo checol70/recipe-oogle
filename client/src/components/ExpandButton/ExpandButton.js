@@ -1,11 +1,9 @@
 import React from "react";
-import "./ExpandButton.css";
 
-const ExpandButton = props => {
-    return props.results.map(recipe =>
-        <li>
-            {recipe.name}
-    </li>
-    );
-}
+
+const ExpandButton = props =>(
+    <button className= "expand-button"{...props}>
+    {props.expanded? "▲" : "▼"}
+    </button>
+)
 export default ExpandButton;
