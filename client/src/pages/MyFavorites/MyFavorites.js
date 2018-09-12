@@ -1,28 +1,67 @@
 import React, { Component } from "react";
+import API from "../../components/utils/API";
+import Container from "../../components/Container";
 import Navbar from "../../components/Navbar";
-import axios from "axios";
+import SearchResults from "../../components/SearchResults";
 
-class MyFavorites extends Component{
+class MyFavorites extends Component {
     state = {
-        results:[]
+        results: [],
+        currentFavorites: []
     }
 
-    componentDidMount = () =>{
-        axios.get("/api/user").then(res=>{
-            console.log(res);
-        })
-        .catch(err=>{
-            console.log(err);
+    componentDidMount = () => {
+        API.getPopulatedFavorites().then(res => {
+            res.data.forEach(e => {
+                e.expanded = false;
+            })
+            this.setState({ results: res.data, currentFavorites: res.data.map(e=> e._id) });
         })
     }
 
-    render(){
-        return(
+    changeExpanded = num => {
+        this.setState({
+            results: this.state.results.map((element, index) => {
+                if (index !== num) {
+                    return element;
+                } else {
+                    element.expanded = !element.expanded;
+                    return element;
+                }
+            })
+        })
+    }
+
+    changeFavorite = i => {
+        API.removeFavorites(this.state.results[i]._id).then(r => {
+            API.getFavorites().then(res => {
+                res.data.forEach(e => {
+                    e.expanded = false;
+                })
+                this.setState({ results: res.data, currentFavorites: res.data })
+            })
+        })
+    }
+
+    render() {
+        return (
             <div className="container">
-                <Navbar />
-                {this.state.results.map(e=> <p>e.name</p>)}
-            </div>
-        )
+                <Navbar displayName={this.state.displayName} location={this.props.location} />
+                <Container style={{ minHeight: "80%" }}>
+
+
+                    <div className="container">
+
+                    </div>
+
+
+                    <SearchResults results={this.state.results}
+                        currentFavorites={this.state.currentFavorites}
+                        changeExpanded={this.changeExpanded}
+                        changeFavorite={this.changeFavorite} />
+                </Container>
+            </div >
+        );
     }
 }
 

@@ -34,8 +34,8 @@ class Search extends Component {
     this.setState({ "search": event.target.value });
   };
 
-  handleFormSubmit = event => {
-    event.preventDefault();
+  
+  getSearch(){
     API.getSearchedRecipes(this.state.search)
       .then(res => {
         res.data.forEach(e => {
@@ -49,9 +49,12 @@ class Search extends Component {
       });
     this.loadFavorites();
   };
+  handleFormSubmit = event => {
+    event.preventDefault();
+    this.getSearch()
+  }
   // Create an array of the current users favorite recipes
-  loadFavorites = event => {
-    console.log('in loadFavorites');
+  loadFavorites = () => {
     API.getFavorites()
       .then(res => {
         this.setState({ currentFavorites: res.data });
@@ -80,17 +83,20 @@ class Search extends Component {
   //this should be passed down to the favorite button!
   //i is the index number of the recipes and the ._id is the recipe id
   changeFavorite = i => {
-    API.addToFavorites(this.state.results[i]._id);
-    this.setState({
-      results: this.state.results.map((element, index) => {
-        if (index !== i) {
-          return element;
-        } else {
-          element.favorite = !element.favorite;
-          return element;
-        }
+    if (this.state.currentFavorites.indexOf(this.state.results[i]._id) === -1) {
+      API.addToFavorites(this.state.results[i]._id).then(s => {
+        API.getFavorites().then(res => {
+          this.setState({ currentFavorites: res.data })
+        })
       })
-    })
+    } else {
+      API.removeFavorites(this.state.results[i]._id).then(r => {
+        API.getFavorites().then(res => {
+          this.setState({ currentFavorites: res.data })
+        })
+        this.getSearch();
+      })
+    }
   }
 
   render() {
@@ -123,12 +129,12 @@ class Search extends Component {
                 </button>
             </form>
           </div>
-           
 
-        <SearchResults results={this.state.results}
-          currentFavorites={this.state.currentFavorites}
-          changeExpanded={this.changeExpanded}
-          changeFavorite={this.changeFavorite} />
+
+          <SearchResults results={this.state.results}
+            currentFavorites={this.state.currentFavorites}
+            changeExpanded={this.changeExpanded}
+            changeFavorite={this.changeFavorite} />
         </Container>
       </div >
     );
