@@ -32,7 +32,7 @@ mongoose.connect(MONGODB_URI);
 passport.use(new GoogleStrategy({
     clientID: config.id,
     clientSecret: config.secret,
-    callbackURL: "/auth/google/callback"
+    callbackURL: "https://recipeoogle.herokuapp.com/auth/google/callback"
 },
     function (accessToken, refreshToken, profile, cb) {
         db.User.findOne({
