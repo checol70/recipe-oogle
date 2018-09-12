@@ -49,7 +49,6 @@ passport.use(new GoogleStrategy({
                     return cb(err, val);
                 })
             } else {
-                console.log(accessToken);
                 db.User.findByIdAndUpdate(user._id,{token: accessToken}).exec((err,u)=>{
                     return cb(err, u);
                 })

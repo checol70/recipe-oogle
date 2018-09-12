@@ -12,6 +12,9 @@ export default {
     return axios.get("/api/recipes/all");
   },
   getSearchedRecipes: function(search) {
+    if (search === ""){
+      search = "all"
+    }
     return axios.get("/api/recipes/" + search);
   },
   postRecipes: function(recipe) {
@@ -23,5 +26,11 @@ export default {
   getFavorites: function() {
     //search user table to get user favorite recipes
     return axios.get("api/user/" + window.localStorage.getItem("tkn"));
+  },
+  removeFavorites: (recipeId)=>{
+    return axios.delete(`/api/user/${window.localStorage.getItem("tkn")}/${recipeId}`);
+  },
+  getPopulatedFavorites: ()=>{
+    return axios.get(`/api/user/recipes/${window.localStorage.getItem("tkn")}`)
   }
 };

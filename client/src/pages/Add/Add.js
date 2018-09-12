@@ -26,15 +26,11 @@ class Add extends Component {
 
     // convert list of ingredients from a comma delimited string into an array
     const obj = this.state;
-    //console.log(this.state);
 
     const ingArray = obj.ingredients.split(",");
 
     // convert steps from a comma delimited string into an array
     const stepsArray = obj.steps.split(",");
-
-    console.log("about to call API postRecipes");
-    console.log("obj.ingredients " + obj.ingredients);
     API.postRecipes({
       name: this.state.name,
       ingredients: ingArray,

@@ -12,7 +12,7 @@ function SearchResults(props) {
                 return (
                     <li key={int + "res"} className="expander">
                         <ExpandButton className="expand-button" onClick={() => { props.changeExpanded(int) }} expand={recipe.expanded} />
-                        <FavoriteButton className="favorite-button" onClick={() => { props.changeFavorite(int) }} favorite={recipe.favorite}/>
+                        <FavoriteButton className="favorite-button" onClick={() => { props.changeFavorite(int) }} favorite={ props.currentFavorites.indexOf(recipe._id) > -1 }/>
                         <h3>{recipe.name}</h3>
                         {recipe.expanded ?
                             <div>
