@@ -61,6 +61,7 @@ class Add extends Component {
             <input type="text" className="form-control" name="name" placeholder="Fish Tacos" 
             onChange = {this.handleInputChange} value={this.state.name} />
 
+
           </div>
           <div className="form-group">
             <label htmlFor="ingredients">Ingredients</label>
@@ -71,6 +72,7 @@ class Add extends Component {
             <label className="form-check-label" htmlFor="exampleCheck1">Steps</label>
             <input type="text" className="form-control" name="steps" placeholder="Cook fish, place fish in tortilla, eat" 
             onChange = {this.handleInputChange} value={this.state.steps}/>
+
           </div>
           <button type="submit" className="btn btn-primary"
             onClick={this.handleFormSubmit}

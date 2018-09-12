@@ -12,6 +12,7 @@ class Search extends Component {
   state = {
     search: "",
     results: [],
+    currentFavorites: [],
     userID: "",
     error: "",
     displayName: window.localStorage.getItem("displayName")
@@ -44,18 +45,48 @@ class Search extends Component {
       })
       .catch(err => {
         console.log(`error: ${err}`)
-        this.setState({ error: err })
+        this.setState({ error: err });
+      });
+    this.loadFavorites();
+  };
+  // Create an array of the current users favorite recipes
+  loadFavorites = event => {
+    console.log('in loadFavorites');
+    API.getFavorites()
+      .then(res => {
+        this.setState({ currentFavorites: res.data });
+      })
+      .catch(err => {
+        console.log(`error: ${err}`)
+        this.setState({ error: err });
       });
   };
 
+
   //this should be passed down to the expand button!
-  changeExpanded = i => {
+  // num is integer value
+  changeExpanded = num => {
+    this.setState({
+      results: this.state.results.map((element, index) => {
+        if (index !== num) {
+          return element;
+        } else {
+          element.expanded = !element.expanded;
+          return element;
+        }
+      })
+    })
+  }
+  //this should be passed down to the favorite button!
+  //i is the index number of the recipes and the ._id is the recipe id
+  changeFavorite = i => {
+    API.addToFavorites(this.state.results[i]._id);
     this.setState({
       results: this.state.results.map((element, index) => {
         if (index !== i) {
           return element;
         } else {
-          element.expanded = !element.expanded;
+          element.favorite = !element.favorite;
           return element;
         }
       })
@@ -80,23 +111,26 @@ class Search extends Component {
                 <span className="google-g">g</span><span className="google-l">l</span>
                 <span className="google-e">e</span></span>
 
-              
-              <form className="input-group input-group-sm" onSubmit={(e)=>this.modifyTask(e)}>
-                <input id="form" className="form-control" type="text" onChange={this.handleInputChange}  />
-
-                <button  className="btn btn-primary"
-                  onClick={this.handleFormSubmit}
-                  type="submit"
-                >
-                  Search
-                </button>
-                </form>
-              </div>
             </div>
-          
-          <SearchResults results={this.state.results} changeExpanded={this.changeExpanded} />
+            <form className="input-group input-group-sm" onSubmit={(e) => this.modifyTask(e)}>
+              <input id="form" className="form-control" type="text" onChange={this.handleInputChange} />
+
+              <button className="btn btn-primary"
+                onClick={this.handleFormSubmit}
+                type="submit"
+              >
+                Search
+                </button>
+            </form>
+          </div>
+           
+
+        <SearchResults results={this.state.results}
+          currentFavorites={this.state.currentFavorites}
+          changeExpanded={this.changeExpanded}
+          changeFavorite={this.changeFavorite} />
         </Container>
-      </div>
+      </div >
     );
   }
 }
