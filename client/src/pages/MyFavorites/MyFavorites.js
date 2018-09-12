@@ -34,11 +34,11 @@ class MyFavorites extends Component {
 
     changeFavorite = i => {
         API.removeFavorites(this.state.results[i]._id).then(r => {
-            API.getFavorites().then(res => {
+            API.getPopulatedFavorites().then(res => {
                 res.data.forEach(e => {
                     e.expanded = false;
                 })
-                this.setState({ results: res.data, currentFavorites: res.data })
+                this.setState({ results: res.data, currentFavorites: res.data.map(e=>e._id) })
             })
         })
     }
