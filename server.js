@@ -35,6 +35,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://recipeoogle.herokuapp.com/auth/google/callback"
 },
     function (accessToken, refreshToken, profile, cb) {
+        console.log("does this run on heroku?")
         db.User.findOne({
             googleId: profile.id
         }).exec((err, user) => {
@@ -49,6 +50,7 @@ passport.use(new GoogleStrategy({
                     return cb(err, val);
                 })
             } else {
+                console.log("hello")
                 console.log(accessToken);
                 db.User.findByIdAndUpdate(user._id,{token: accessToken}).exec((err,u)=>{
                     return cb(err, u);
