@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
-
+import SearchResults from "../../components/SearchResults"
 class Add extends Component {
 
   state = {
@@ -16,7 +16,7 @@ class Add extends Component {
     return (
       <div className="container">
       <Navbar />
-        <p>Getting all recipes</p>
+        
       </div>
     )
   }
