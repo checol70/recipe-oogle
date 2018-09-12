@@ -136,21 +136,6 @@ class Search extends Component {
                 <span className="google-g">g</span><span className="google-l">l</span>
                 <span className="google-e">e</span></span>
 
-<<<<<<< HEAD
-              <div className="input-group input-group-sm">
-                <input id="form" className="form-control" type="text" onChange={this.handleInputChange} />
-
-                <button className="btn btn-primary"
-                  onClick={this.handleFormSubmit}
-                  type="success"
-                >
-                  Search
-                </button>
-              </div>
-            </div>
-          </div>
-          <SearchResults results={this.state.results} changeExpanded={this.changeExpanded} />
-=======
             </div>
             <form className="input-group input-group-sm" onSubmit={(e) => this.modifyTask(e)}>
               <input id="form" className="form-control" type="text" onChange={this.handleInputChange} />
@@ -169,7 +154,6 @@ class Search extends Component {
             currentFavorites={this.state.currentFavorites}
             changeExpanded={this.changeExpanded}
             changeFavorite={this.changeFavorite} />
->>>>>>> 24806f03cdd3a53a25732537839a8d5c208f7210
         </Container>
       </div >
     );
