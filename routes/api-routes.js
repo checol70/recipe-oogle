@@ -81,9 +81,6 @@ module.exports = function (app) {
         db.User.findOne({googleId: token }, (err, user) => {
             if (user !== null) {
                 //this removes the reference from the user.
-
-                console.log(user.favoriteRecipes)
-
                 const i = user.favoriteRecipes.indexOf(id);
                 if (i > -1) {
                     user.favoriteRecipes.splice(i, 1);

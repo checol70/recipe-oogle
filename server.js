@@ -35,8 +35,6 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://recipeoogle.herokuapp.com/auth/google/callback"
 },
     function (accessToken, refreshToken, profile, cb) {
-        console.log(`accessToken: ${accessToken}`)
-        console.log(`profile: ${profile}`)
         db.User.findOne({
             googleId: profile.id
         }).exec((err, user) => {
@@ -85,7 +83,6 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }))
 app.get('/auth/google/callback',
 passport.authenticate('google', { failureRedirect: '/auth/google' }),
 function (req, res) {
-    console.log("hello");
     // Successful authentication, redirect home.
     const token = req.user.googleId;
     const displayName = req.user.displayName;
