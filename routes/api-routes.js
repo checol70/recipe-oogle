@@ -33,7 +33,11 @@ module.exports = function (app) {
     app.get("/api/user/:token", (req,res)=>{
         db.User.findOne({ googleId: req.params.token }, (err, user) => {
             if(err) return console.log(err);
-            res.send(user.favoriteRecipes);
+            if(user){
+                res.send(user.favoriteRecipes);
+            }else{
+                res.send([]);
+            }
         })
     })
 
@@ -47,7 +51,7 @@ module.exports = function (app) {
                 res.send(user.favoriteRecipes);
 
             }else{
-                res.end();
+                res.redirect("/auth/google");
             }
         })
     })
