@@ -43,7 +43,12 @@ module.exports = function (app) {
         .populate("favoriteRecipes")
         .exec((err, user) => {
             if(err) return console.log(err);
-            res.send(user.favoriteRecipes);
+            if(user){
+                res.send(user.favoriteRecipes);
+
+            }else{
+                res.end();
+            }
         })
     })
 
@@ -66,13 +71,11 @@ module.exports = function (app) {
     //this route is for removing a recipe from favorites
     app.delete("/api/user/:token/:recipeId", (req, res) => {
         //since we are using these alot I assigned them to something shorter.
-        console.log("deleting")
         const token = req.params.token;
         const id = req.params.recipeId;
         //Here we are finding the user, so that we can remove the recipe from their favorites.  I am making sure that they are authed to keep others from hacking your account and then deleting everything.
         db.User.findOne({googleId: token }, (err, user) => {
             if (user !== null) {
-                console.log("still deleting")
                 //this removes the reference from the user.
 
                 console.log(user.favoriteRecipes)
@@ -81,7 +84,6 @@ module.exports = function (app) {
                 if (i > -1) {
                     user.favoriteRecipes.splice(i, 1);
                     user.save((err, updUser) => {
-                        console.log("deleting again")
                         //now we will remove the user from the recipe.
                         db.Recipe.findById(id, (err, recipe) => {
                             if (err) { console.log(err); }
@@ -114,8 +116,6 @@ module.exports = function (app) {
     //this is for adding recipes to the current users favorites.
     //:id is the recipe id and :token is the user id
     app.put("/api/recipes/:id/:token", (req, res) => {
-        console.log("in api-routes app.put");
-        console.log(req);
         db.User.findOne({ googleId: req.params.token }, (err, user) => {
             if (err) return console.log(err);
             user.favoriteRecipes.push(req.params.id);
