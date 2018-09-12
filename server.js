@@ -35,7 +35,8 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://recipeoogle.herokuapp.com/auth/google/callback"
 },
     function (accessToken, refreshToken, profile, cb) {
-        console.log("does this run on heroku?")
+        console.log(`accessToken: ${accessToken}`)
+        console.log(`profile: ${profile}`)
         db.User.findOne({
             googleId: profile.id
         }).exec((err, user) => {
