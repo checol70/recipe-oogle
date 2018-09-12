@@ -16,5 +16,12 @@ export default {
   },
   postRecipes: function(recipe) {
     return axios.post("/api/recipes/" + window.localStorage.getItem("tkn"), recipe);
+  },
+  addToFavorites: function(recipeID) {
+    return axios.put("/api/recipes/" + recipeID + "/" + window.localStorage.getItem("tkn"));
+  },
+  getFavorites: function() {
+    //search user table to get user favorite recipes
+    return axios.get("api/user/" + window.localStorage.getItem("tkn"));
   }
 };

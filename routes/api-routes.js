@@ -34,6 +34,7 @@ module.exports = function (app) {
 
     //this route is for getting the current user's recipes.  please note the singular version of user.
     app.get("/api/user/:token", (req,res)=>{
+        console.log('in app.get to get users favorite recipes')
         console.log(req.cookies)
         db.User.findOne({ googleId: req.params.token }, (err, user) => {
             if(err) return console.log(err);
@@ -106,7 +107,10 @@ module.exports = function (app) {
     })
 
     //this is for adding recipes to the current users favorites.
+    //:id is the recipe id and :token is the user id
     app.put("/api/recipes/:id/:token", (req, res) => {
+        console.log("in api-routes app.put");
+        console.log(req);
         db.User.findOne({ googleId: req.params.token }, (err, user) => {
             if (err) return console.log(err);
             user.favoriteRecipes.push(req.params.id);
