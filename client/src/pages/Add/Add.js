@@ -26,15 +26,11 @@ class Add extends Component {
 
     // convert list of ingredients from a comma delimited string into an array
     const obj = this.state;
-    //console.log(this.state);
 
     const ingArray = obj.ingredients.split(",");
 
     // convert steps from a comma delimited string into an array
     const stepsArray = obj.steps.split(",");
-
-    console.log("about to call API postRecipes");
-    console.log("obj.ingredients " + obj.ingredients);
     API.postRecipes({
       name: this.state.name,
       ingredients: ingArray,
@@ -59,18 +55,20 @@ class Add extends Component {
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Recipe Name</label>
             <input type="text" className="form-control" name="name" placeholder="Fish Tacos" 
-            onChange = {this.handleInputChange}/>
+            onChange = {this.handleInputChange} value={this.state.name} />
+
 
           </div>
           <div className="form-group">
             <label htmlFor="ingredients">Ingredients</label>
             <input type="text" className="form-control" name="ingredients" placeholder="Fish, Tortilla, etc.." 
-            onChange = {this.handleInputChange}/>
+            onChange = {this.handleInputChange} value={this.state.ingredients}/>
           </div>
           <div className="form-group">
             <label className="form-check-label" htmlFor="exampleCheck1">Steps</label>
             <input type="text" className="form-control" name="steps" placeholder="Cook fish, place fish in tortilla, eat" 
-            onChange = {this.handleInputChange}/>
+            onChange = {this.handleInputChange} value={this.state.steps}/>
+
           </div>
           <button type="submit" className="btn btn-primary"
             onClick={this.handleFormSubmit}

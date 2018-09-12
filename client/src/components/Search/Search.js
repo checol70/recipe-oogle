@@ -11,6 +11,7 @@ class Search extends Component {
   state = {
     search: "",
     results: [],
+    currentFavorites: [],
     userID: "",
     error: "",
     displayName: window.localStorage.getItem("displayName")
@@ -52,8 +53,8 @@ class Search extends Component {
     this.setState({ "search": event.target.value });
   };
 
-  handleFormSubmit = event => {
-    event.preventDefault();
+  
+  getSearch(){
     API.getSearchedRecipes(this.state.search)
       .then(res => {
         res.data.forEach(e => {
@@ -63,15 +64,33 @@ class Search extends Component {
       })
       .catch(err => {
         console.log(`error: ${err}`)
-        this.setState({ error: err })
+        this.setState({ error: err });
+      });
+    this.loadFavorites();
+  };
+  handleFormSubmit = event => {
+    event.preventDefault();
+    this.getSearch()
+  }
+  // Create an array of the current users favorite recipes
+  loadFavorites = () => {
+    API.getFavorites()
+      .then(res => {
+        this.setState({ currentFavorites: res.data });
+      })
+      .catch(err => {
+        console.log(`error: ${err}`)
+        this.setState({ error: err });
       });
   };
 
+
   //this should be passed down to the expand button!
-  changeExpanded = i => {
+  // num is integer value
+  changeExpanded = num => {
     this.setState({
       results: this.state.results.map((element, index) => {
-        if (index !== i) {
+        if (index !== num) {
           return element;
         } else {
           element.expanded = !element.expanded;
@@ -79,6 +98,24 @@ class Search extends Component {
         }
       })
     })
+  }
+  //this should be passed down to the favorite button!
+  //i is the index number of the recipes and the ._id is the recipe id
+  changeFavorite = i => {
+    if (this.state.currentFavorites.indexOf(this.state.results[i]._id) === -1) {
+      API.addToFavorites(this.state.results[i]._id).then(s => {
+        API.getFavorites().then(res => {
+          this.setState({ currentFavorites: res.data })
+        })
+      })
+    } else {
+      API.removeFavorites(this.state.results[i]._id).then(r => {
+        API.getFavorites().then(res => {
+          this.setState({ currentFavorites: res.data })
+        })
+        this.getSearch();
+      })
+    }
   }
 
   render() {
@@ -99,6 +136,7 @@ class Search extends Component {
                 <span className="google-g">g</span><span className="google-l">l</span>
                 <span className="google-e">e</span></span>
 
+<<<<<<< HEAD
               <div className="input-group input-group-sm">
                 <input id="form" className="form-control" type="text" onChange={this.handleInputChange} />
 
@@ -112,8 +150,28 @@ class Search extends Component {
             </div>
           </div>
           <SearchResults results={this.state.results} changeExpanded={this.changeExpanded} />
+=======
+            </div>
+            <form className="input-group input-group-sm" onSubmit={(e) => this.modifyTask(e)}>
+              <input id="form" className="form-control" type="text" onChange={this.handleInputChange} />
+
+              <button className="btn btn-primary"
+                onClick={this.handleFormSubmit}
+                type="submit"
+              >
+                Search
+                </button>
+            </form>
+          </div>
+
+
+          <SearchResults results={this.state.results}
+            currentFavorites={this.state.currentFavorites}
+            changeExpanded={this.changeExpanded}
+            changeFavorite={this.changeFavorite} />
+>>>>>>> 24806f03cdd3a53a25732537839a8d5c208f7210
         </Container>
-      </div>
+      </div >
     );
   }
 }

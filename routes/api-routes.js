@@ -4,7 +4,6 @@ module.exports = function (app) {
     //this route will return all recipes in the database.
     app.get("/api/recipes/all", (req, res) => {
         db.Recipe.find({}).then(result => {
-            console.log(`req.user ${req.user}`)
             res.send(result);
         })
             .catch(err => {
@@ -18,11 +17,9 @@ module.exports = function (app) {
         const regex = new RegExp(req.params.displayName, "i");
         db.User.find({ $text: { $search: regex } }, (err, data) => {
             if (err) console.log(err);
-            console.log(data);
 
             const arr = data.map(e => {
                 const { displayName, favoriteRecipes } = e
-                console.log(displayName, favoriteRecipes)
                 return obj = {
                     displayName,
                     favoriteRecipes
@@ -34,8 +31,17 @@ module.exports = function (app) {
 
     //this route is for getting the current user's recipes.  please note the singular version of user.
     app.get("/api/user/:token", (req,res)=>{
-        console.log(req.cookies)
         db.User.findOne({ googleId: req.params.token }, (err, user) => {
+            if(err) return console.log(err);
+            res.send(user.favoriteRecipes);
+        })
+    })
+
+    //this gets the users recipes as an object
+    app.get("/api/user/recipes/:token", (req,res)=>{
+        db.User.findOne({ googleId: req.params.token })
+        .populate("favoriteRecipes")
+        .exec((err, user) => {
             if(err) return console.log(err);
             res.send(user.favoriteRecipes);
         })
@@ -45,8 +51,6 @@ module.exports = function (app) {
     app.post("/api/recipes/:token", (req, res) => {
         db.User.findOne({ googleId: req.params.token }, (err, user) => {
             if (err) console.log(err);
-           
-                console.log("now im here")
                 req.body.originalUser = user._id;
                 req.body.users = [user.id];
                 db.Recipe.create(req.body, (err, recipe) => {
@@ -62,11 +66,13 @@ module.exports = function (app) {
     //this route is for removing a recipe from favorites
     app.delete("/api/user/:token/:recipeId", (req, res) => {
         //since we are using these alot I assigned them to something shorter.
+        console.log("deleting")
         const token = req.params.token;
         const id = req.params.recipeId;
         //Here we are finding the user, so that we can remove the recipe from their favorites.  I am making sure that they are authed to keep others from hacking your account and then deleting everything.
         db.User.findOne({googleId: token }, (err, user) => {
             if (user !== null) {
+                console.log("still deleting")
                 //this removes the reference from the user.
 
                 console.log(user.favoriteRecipes)
@@ -75,7 +81,7 @@ module.exports = function (app) {
                 if (i > -1) {
                     user.favoriteRecipes.splice(i, 1);
                     user.save((err, updUser) => {
-
+                        console.log("deleting again")
                         //now we will remove the user from the recipe.
                         db.Recipe.findById(id, (err, recipe) => {
                             if (err) { console.log(err); }
@@ -86,7 +92,7 @@ module.exports = function (app) {
                                 })
                             } else {
                                 //there are others who have this recipe so we will just remove it from this user.
-                                const userIndex = recipe.indexOf(user._id)
+                                const userIndex = recipe.users.indexOf(user._id)
                                 if (userIndex > -1) {
 
                                     recipe.users.splice(userIndex, 1);
@@ -106,7 +112,10 @@ module.exports = function (app) {
     })
 
     //this is for adding recipes to the current users favorites.
+    //:id is the recipe id and :token is the user id
     app.put("/api/recipes/:id/:token", (req, res) => {
+        console.log("in api-routes app.put");
+        console.log(req);
         db.User.findOne({ googleId: req.params.token }, (err, user) => {
             if (err) return console.log(err);
             user.favoriteRecipes.push(req.params.id);

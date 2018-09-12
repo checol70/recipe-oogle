@@ -134,7 +134,6 @@ function seedUser() {
     db.User.findOne({ googleId: '107597886067898717683' }).exec((err, user) => {
         if (user !== null) {
             //just seed recipes
-            console.log(user.googleId);
             seedRecipes(user._id)
         } else {
             //seed userdb then recursivly call this to make sure we have this working
@@ -152,7 +151,6 @@ function seedRecipes(id) {
         db.Recipe.create(e, (err, data) => {
             if (err) console.log(err);
             db.User.findById(id, (err, res) => {
-                console.log(res.googleId);
                 res.favoriteRecipes.push(data._id);
                 res.save((err, updUser) => {
 
@@ -161,7 +159,6 @@ function seedRecipes(id) {
         })
     })
     setTimeout(() => {
-        console.log("disconnecting")
         mongoose.disconnect();
     }, 1000);
 }

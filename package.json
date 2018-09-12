@@ -1,6 +1,7 @@
 {
   "name": "recipe-oogle",
   "version": "1.0.0",
+  "description": "Mern Demo",
   "main": "server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod",
@@ -11,9 +12,12 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
   },
-  "repository": "https://github.com/checol70/recipe-oogle.git",
   "author": "",
-  "license": "MIT",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^3.5.0",
+    "nodemon": "^1.11.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",

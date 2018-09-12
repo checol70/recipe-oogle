@@ -4,8 +4,7 @@ import "./Navbar.css";
 
 
 
-// Depending on the current path, this component sets the "active" class on the appropriate navigation link item
-//{console.log(props)} 
+// Depending on the current path, this component sets the "active" class on the appropriate navigation link item 
 const Navbar = props => (
   <div className="container">
 
@@ -44,26 +43,16 @@ const Navbar = props => (
           </li>
           <li className="nav-item">
             <Link
-              to="/all"
+              to="/myfavorites"
               className={
                 /* props.location.pathname === "/all" ? "nav-link active" : "nav-link" */
                 "nav-link"
               }
             >
-              All Recipes
+              My Favorites
       </Link>
           </li>
-          <li className="nav-item">
-            <Link
-              to="/myfavorites"
-              className={
-                /*  props.location.pathname === "/contact" ? "nav-link active" : "nav-link" */
-                "nav-link"
-              }
-            >
-              Contact
-      </Link>
-          </li>
+          
         </ul>
       </div>
     </nav>
