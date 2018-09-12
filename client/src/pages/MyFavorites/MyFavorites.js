@@ -15,6 +15,7 @@ class MyFavorites extends Component {
             res.data.forEach(e => {
                 e.expanded = false;
             })
+            console.log(res.data)
             this.setState({ results: res.data, currentFavorites: res.data.map(e=> e._id) });
         })
     }
@@ -38,6 +39,7 @@ class MyFavorites extends Component {
                 res.data.forEach(e => {
                     e.expanded = false;
                 })
+                console.log(res.data)
                 this.setState({ results: res.data, currentFavorites: res.data.map(e=>e._id) })
             })
         })
