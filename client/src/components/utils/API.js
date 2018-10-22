@@ -18,19 +18,23 @@ export default {
     return axios.get("/api/recipes/" + search);
   },
   postRecipes: function(recipe) {
-    return axios.post("/api/recipes/" + window.localStorage.getItem("tkn"), recipe);
+    //puts up a new recipe
+    return axios.post("/api/recipes", recipe);
   },
   addToFavorites: function(recipeID) {
-    return axios.put("/api/recipes/" + recipeID + "/" + window.localStorage.getItem("tkn"));
+    //favorites a recipe
+    return axios.put("/api/recipes/" +recipeID);
   },
   getFavorites: function() {
-    //search user table to get user favorite recipes
-    return axios.get("api/user/" + window.localStorage.getItem("tkn"));
+    //search user table to get user favorite recipe ids, for displaying which ones are favorited
+    return axios.get("api/user");
   },
   removeFavorites: (recipeId)=>{
-    return axios.delete(`/api/user/${window.localStorage.getItem("tkn")}/${recipeId}`);
+    //removes from favorites, and deletes when the last user unfavorites.
+    return axios.delete(`/api/user/${recipeId}`);
   },
   getPopulatedFavorites: ()=>{
-    return axios.get(`/api/user/recipes/${window.localStorage.getItem("tkn")}`)
+    //gets populated favorites for when we want a user to see our favorites.
+    return axios.get(`/api/user/recipes`)
   }
 };
