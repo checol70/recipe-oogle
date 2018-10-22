@@ -1,31 +1,47 @@
 const express = require("express");
+const passport = require("passport")
+const session = require("express-session");
+
+const app = express();
+
+
 const path = require("path");
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3001;
-const app = express();
 //const API = require("./routes/api-routes");
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/recipeoogle";
 const mongoose = require("mongoose");
+<<<<<<< HEAD
 const passport = require("passport")
 const session = require("express-session");
 const cookieParser = require("cookie-parser")
 const config = {id:process.env.id , secret:process.env.secret} || require("./config");
+=======
+
+const config = require("./config");
+>>>>>>> c2ca9e2e767a1a46b423b69934d7f750c5341fc6
 const db = require("./models");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const API = require("./routes/api-routes");
-
+const MongoStore = require("connect-mongo")(session);
 //here is where we will put middleware
-app.use(session({
+sess = {
+    store: new MongoStore({mongooseConnection: mongoose.connection }),
     secret:"SuperDuperSecret",
     resave:false,
     saveUninitialized:true,
-    cookie: {secure:true}
-}))
+    cookie: {}
+}
+if(app.get("env")==="production"){
+    app.set("trust proxy", 1);
+    sess.cookie.secure = true;
+}
+app.use(session(sess))
+
 app.use(passport.initialize())
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cookieParser())
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 

@@ -12,6 +12,13 @@ module.exports = function (app) {
             })
     })
 
+    //this is used to log the user out
+    
+    app.get('/logout', function(req, res){
+        req.logout();
+        res.redirect('/');
+    });
+
     //this is for retrieving another users recipes, so it doesn't need to be authed.
     app.get("/api/users/:displayName", (req, res) => {
         const regex = new RegExp(req.params.displayName, "i");
@@ -29,9 +36,9 @@ module.exports = function (app) {
         })
     })
 
-    //this route is for getting the current user's recipes.  please note the singular version of user.
-    app.get("/api/user/:token", (req,res)=>{
-        db.User.findOne({ googleId: req.params.token }, (err, user) => {
+    //this route is for getting the current user's recipes, so that we can show which ones are favorited, and which ones aren't.
+    app.get("/api/user", (req,res)=>{
+        db.User.findById(req.user._id, (err, user) => {
             if(err) return console.log(err);
             if(user){
                 res.send(user.favoriteRecipes);
@@ -41,9 +48,9 @@ module.exports = function (app) {
         })
     })
 
-    //this gets the users recipes as an object
-    app.get("/api/user/recipes/:token", (req,res)=>{
-        db.User.findOne({ googleId: req.params.token })
+    //this gets the users recipes so that we can display them.
+    app.get("/api/user/recipes", (req,res)=>{
+        db.User.findById(req.user._id)
         .populate("favoriteRecipes")
         .exec((err, user) => {
             if(err) return console.log(err);
@@ -57,8 +64,8 @@ module.exports = function (app) {
     })
 
     //this route is for posting recipes.  the token argument is in the local storage if they have signed in.
-    app.post("/api/recipes/:token", (req, res) => {
-        db.User.findOne({ googleId: req.params.token }, (err, user) => {
+    app.post("/api/recipes", (req, res) => {
+        db.User.findById(req.user._id, (err, user) => {
             if (err) console.log(err);
                 req.body.originalUser = user._id;
                 req.body.users = [user.id];
@@ -73,8 +80,9 @@ module.exports = function (app) {
     })
 
     //this route is for removing a recipe from favorites
-    app.delete("/api/user/:token/:recipeId", (req, res) => {
+    app.delete("/api/user/:recipeId", (req, res) => {
         //since we are using these alot I assigned them to something shorter.
+<<<<<<< HEAD
         const token = req.params.token;
         const id = req.params.recipeId;
         //Here we are finding the user, so that we can remove the recipe from their favorites.  I am making sure that they are authed to keep others from hacking your account and then deleting everything.
@@ -97,27 +105,32 @@ module.exports = function (app) {
                                 //there are others who have this recipe so we will just remove it from this user.
                                 const userIndex = recipe.users.indexOf(user._id)
                                 if (userIndex > -1) {
+=======
+        console.log("original " + req.user.favoriteRecipes)
+        const id = req.params.recipeId;
+        //Here we are finding the user, so that we can remove the recipe from their favorites.  I am making sure that they are authed to keep others from hacking your account and then deleting everything.
+        const i = req.user.favoriteRecipes.indexOf(id);
+        req.user.favoriteRecipes.splice(i,1)
+        console.log("modified "+req.user.favoriteRecipes)
+>>>>>>> c2ca9e2e767a1a46b423b69934d7f750c5341fc6
 
-                                    recipe.users.splice(userIndex, 1);
-                                    recipe.save((err, updRecipe) => {
-                                        res.end();
-                                    })
-                                }
-                            }
-                        })
-                    });
-                }
-                else{
-                    res.end();
-                }
-            }
+        //this is for updating the user in the db.
+        db.User.findByIdAndUpdate(req.user._id, req.user,(err,user)=>{
+            if(err) return console.log(err);
+            console.log(user);
+            res.end();
         })
     })
 
     //this is for adding recipes to the current users favorites.
     //:id is the recipe id and :token is the user id
+<<<<<<< HEAD
     app.put("/api/recipes/:id/:token", (req, res) => {
         db.User.findOne({ googleId: req.params.token }, (err, user) => {
+=======
+    app.put("/api/recipes/:id", (req, res) => {
+        db.User.findOne({ googleId: req.user.googleId }, (err, user) => {
+>>>>>>> c2ca9e2e767a1a46b423b69934d7f750c5341fc6
             if (err) return console.log(err);
             user.favoriteRecipes.push(req.params.id);
             user.save((err, updUser) => {

@@ -35,10 +35,19 @@ class MyFavorites extends Component {
     changeFavorite = i => {
         API.removeFavorites(this.state.results[i]._id).then(r => {
             API.getPopulatedFavorites().then(res => {
+<<<<<<< HEAD
+=======
+                let ids = [];
+>>>>>>> c2ca9e2e767a1a46b423b69934d7f750c5341fc6
                 res.data.forEach(e => {
                     e.expanded = false;
+                    ids.push(e._id);
                 })
+<<<<<<< HEAD
                 this.setState({ results: res.data, currentFavorites: res.data.map(e=>e._id) })
+=======
+                this.setState({ results: res.data, currentFavorites: ids })
+>>>>>>> c2ca9e2e767a1a46b423b69934d7f750c5341fc6
             })
         })
     }
@@ -64,8 +73,5 @@ class MyFavorites extends Component {
         );
     }
 }
-
-//const obj = this.state
-//obj.ingredients = obj.ingredients.splice(",")
 
 export default MyFavorites;
