@@ -11,15 +11,8 @@ const PORT = process.env.PORT || 3001;
 //const API = require("./routes/api-routes");
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/recipeoogle";
 const mongoose = require("mongoose");
-<<<<<<< HEAD
-const passport = require("passport")
-const session = require("express-session");
-const cookieParser = require("cookie-parser")
-const config = {id:process.env.id , secret:process.env.secret} || require("./config");
-=======
 
 const config = require("./config");
->>>>>>> c2ca9e2e767a1a46b423b69934d7f750c5341fc6
 const db = require("./models");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const API = require("./routes/api-routes");

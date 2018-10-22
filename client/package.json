@@ -6,13 +6,8 @@
   "proxy": "https://recipeoogle.herokuapp.com/",
   "dependencies": {
     "axios": "^0.18.0",
-<<<<<<< HEAD
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-=======
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
->>>>>>> c2ca9e2e767a1a46b423b69934d7f750c5341fc6
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.0.14"
   },

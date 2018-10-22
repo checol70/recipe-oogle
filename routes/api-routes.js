@@ -82,37 +82,12 @@ module.exports = function (app) {
     //this route is for removing a recipe from favorites
     app.delete("/api/user/:recipeId", (req, res) => {
         //since we are using these alot I assigned them to something shorter.
-<<<<<<< HEAD
-        const token = req.params.token;
-        const id = req.params.recipeId;
-        //Here we are finding the user, so that we can remove the recipe from their favorites.  I am making sure that they are authed to keep others from hacking your account and then deleting everything.
-        db.User.findOne({googleId: token }, (err, user) => {
-            if (user !== null) {
-                //this removes the reference from the user.
-                const i = user.favoriteRecipes.indexOf(id);
-                if (i > -1) {
-                    user.favoriteRecipes.splice(i, 1);
-                    user.save((err, updUser) => {
-                        //now we will remove the user from the recipe.
-                        db.Recipe.findById(id, (err, recipe) => {
-                            if (err) { console.log(err); }
-                            if (recipe.users.length <= 1) {
-                                //this is the only user with this recipe so we remove it completely
-                                db.Recipe.findByIdAndRemove(id, () => {
-                                    res.end();
-                                })
-                            } else {
-                                //there are others who have this recipe so we will just remove it from this user.
-                                const userIndex = recipe.users.indexOf(user._id)
-                                if (userIndex > -1) {
-=======
         console.log("original " + req.user.favoriteRecipes)
         const id = req.params.recipeId;
         //Here we are finding the user, so that we can remove the recipe from their favorites.  I am making sure that they are authed to keep others from hacking your account and then deleting everything.
         const i = req.user.favoriteRecipes.indexOf(id);
         req.user.favoriteRecipes.splice(i,1)
         console.log("modified "+req.user.favoriteRecipes)
->>>>>>> c2ca9e2e767a1a46b423b69934d7f750c5341fc6
 
         //this is for updating the user in the db.
         db.User.findByIdAndUpdate(req.user._id, req.user,(err,user)=>{
@@ -124,13 +99,8 @@ module.exports = function (app) {
 
     //this is for adding recipes to the current users favorites.
     //:id is the recipe id and :token is the user id
-<<<<<<< HEAD
-    app.put("/api/recipes/:id/:token", (req, res) => {
-        db.User.findOne({ googleId: req.params.token }, (err, user) => {
-=======
     app.put("/api/recipes/:id", (req, res) => {
         db.User.findOne({ googleId: req.user.googleId }, (err, user) => {
->>>>>>> c2ca9e2e767a1a46b423b69934d7f750c5341fc6
             if (err) return console.log(err);
             user.favoriteRecipes.push(req.params.id);
             user.save((err, updUser) => {
