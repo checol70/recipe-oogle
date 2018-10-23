@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3001;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/recipeoogle";
 const mongoose = require("mongoose");
 
-const config = require("./config");
+const config = (process.env.NODE_ENV =="production"?{id: process.env.id, secret: process.env.id}: require("./config"));
 const db = require("./models");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const API = require("./routes/api-routes");
