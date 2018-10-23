@@ -82,17 +82,14 @@ module.exports = function (app) {
     //this route is for removing a recipe from favorites
     app.delete("/api/user/:recipeId", (req, res) => {
         //since we are using these alot I assigned them to something shorter.
-        console.log("original " + req.user.favoriteRecipes)
         const id = req.params.recipeId;
         //Here we are finding the user, so that we can remove the recipe from their favorites.  I am making sure that they are authed to keep others from hacking your account and then deleting everything.
         const i = req.user.favoriteRecipes.indexOf(id);
         req.user.favoriteRecipes.splice(i,1)
-        console.log("modified "+req.user.favoriteRecipes)
 
         //this is for updating the user in the db.
         db.User.findByIdAndUpdate(req.user._id, req.user,(err,user)=>{
             if(err) return console.log(err);
-            console.log(user);
             res.end();
         })
     })

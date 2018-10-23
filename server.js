@@ -13,7 +13,6 @@ const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/recipeoogle"
 const mongoose = require("mongoose");
 
 const config = (process.env.NODE_ENV =="production"?{id: process.env.id, secret: process.env.secret}: require("./config"));
-console.log(config)
 const db = require("./models");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const API = require("./routes/api-routes");
@@ -26,7 +25,6 @@ sess = {
     saveUninitialized:true,
     cookie: {}
 }
-console.log(config);
 if(app.get("env")==="production"){
     app.set("trust proxy", 1);
     sess.cookie.secure = true;
