@@ -93,11 +93,10 @@ app.get('/auth/google/callback',
 passport.authenticate('google', { failureRedirect: '/auth/google' }),
 function (req, res) {
     // Successful authentication, redirect home.
-    const token = req.user.googleId;
     const displayName = req.user.displayName;
     //stupid thing needs a change to run
 
-    res.redirect(`https://recipeoogle.herokuapp.com/?token=${token}&displayName=${displayName}`);
+    res.redirect(`https://recipeoogle.herokuapp.com/?displayName=${displayName}`);
 });
 
 
